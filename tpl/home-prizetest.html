@@ -1,0 +1,163 @@
+<div data-ng-controller="PrizesController">
+      <div class="navbar navbar-inverse topnav">
+        <div class="pull-left">
+        <ul class="topnavleft">
+           <li><a target="_blank" href="http://{{supportDomain}}"><b>{{'_motherLink_' | i18n}}</b></a></li>
+           <li><a target="_blank" href="{{'http://betcoincircle.tm'|i18n}}"><b>{{'_circleLink_' | i18n}}</b></a></li>
+          <li class="divider"></li>
+           <li><a href="#{{'_whatisBitcoinModalLink_'|i18n}}" target="_blank" data-toggle="modal">{{'_whatisBitcoinLink_' | i18n}}</a></li>
+          <li class="divider"></li>
+          <li><a href="#{{'_whereBitcoinModalLink_'|i18n}}" data-toggle="modal">{{'_whereBitcoinLink_' | i18n}}</a></li>
+
+
+
+        </ul>
+        </div>
+        <div class="pull-right">
+
+        <ul class="topnavright">
+
+
+          <li><a href="{{'_offlineLink_' | i18n }}" data-toggle="modal">{{'_OfflineButton_' | i18n}}</a></li>
+                  <li class="divider"></li>
+          <li><a ng-href="{{ 'mailto:news@' + supportDomain + '?subject=' }}{{ '_subscribeSubject_' | i18n }}{{ supportDomain }}" data-toggle="modal">{{'_SubscribeButton_' | i18n}}</a></li>
+
+
+
+          <li class="divider"></li>
+          <li><a style="color:#A90000;font-weight:bold;" href="#warning" data-toggle="modal">{{'_WarningButton_' | i18n}}</a></li>
+
+
+        </ul>
+        </div>
+      </div>
+
+      <div data-ng-include data-src="'views/includes/pgp.html'"></div>
+      <div data-ng-include data-src="'views/includes/whatisbitcoin-en.html'"></div>
+      <div data-ng-include data-src="'views/includes/wheretogetbitcoin-en.html'"></div>
+      <div data-ng-include data-src="'views/includes/custombets-cn.html'"></div>
+      <div data-ng-include data-src="'views/includes/custombets.html'"></div>
+      <div data-ng-include data-src="'views/includes/faq-cn.html'"></div>
+      <div data-ng-include data-src="'views/includes/faq.html'"></div>
+      <div data-ng-include data-src="'views/includes/whatisbitcoin-cn.html'"></div>
+      <div data-ng-include data-src="'views/includes/wheretogetbitcoin-cn.html'"></div>
+
+      <div data-ng-include data-src="'views/includes/how-to-play.html'"></div>
+      <div data-ng-include data-src="'views/includes/advanced.html'"></div>
+      <div data-ng-include data-src="'views/includes/verification.html'"></div>
+      <div data-ng-include data-src="'views/includes/warning.html'"></div>
+      <div class="container" id="game-container" style="width:960px;">
+        <div class="row top-wrap">
+            <div class="col-4 col-lg-4 column">
+
+            </div>
+
+            <div class="col-4 col-lg-4 column">           
+                <div>
+                <img alt="BetCoin ™ Prize Bitcoin Casino Game" src="{{'_titleImage_' | i18n}}" /></div>                
+            </div>
+            <div class="col-4 col-lg-4 column">
+
+            </div>
+        </div>
+
+       
+        <ul class="links">
+
+           <li><a href="#howto" data-toggle="modal">{{'Continue' | i18n}}</a></li>
+
+          <li><a href="#advanced" data-toggle="modal">{{'Continue' | i18n}}</a></li>
+           <li><a href="#verification" data-toggle="modal">{{'Continue' | i18n}}</a></li>
+           <li><a href="#{{'custombets'|i18n}}" data-toggle="modal" style="color:#ffd479 !important;text-decoration:underline;">{{'Custom Bets'|i18n}}</a></li>
+
+           <li><a href="{{'faq'|i18n}}" data-toggle="modal">{{'_FaqHeader1_' | i18n}}</a></li>
+          <li><a ng-click="showTable('leaderboard');" data-toggle="modal" style="color:#ffd479 !important;text-decoration:underline;"><img style="border:0;display:inline-block;vertical-align:middle;width:50px;" src="./images/new-button.png"/>{{'_leaderboard_'|i18n}}</a></li>
+
+
+        </ul>
+                
+        <div class="row top-wrap">
+            <div class="col-4 col-lg-4 column">
+                <div class="counter counter-left">
+                    <div class="counter-numbers">{{totalPrize | noFractionCurrency}}</div>
+                    <div class="counter-subtitle">1 BTC = $ {{exchange | noFractionCurrency}} USD</div>
+                    <div class="counter-title">{{'_ColumnLeftdiv_' | i18n}}</div>
+                </div>
+            </div>
+
+            <div class="col-4 col-lg-4 column">
+                <div class="counter counter-middle">
+                  <div class="recentbets">
+                  <div>{{recentBets0}} {{'_recentwon_'|i18n}} {{recentBets0B}}</div>
+                  <div>{{recentBets1}} {{'_recentwon_'|i18n}} {{recentBets1B}}</div>
+                  <div>{{recentBets2}} {{'_recentwon_'|i18n}} {{recentBets2B}}</div>
+                  <!--<div>{{recentBets3}} {{'_recentwon_'|i18n}} {{recentBets3B}}</div>
+                  <div>{{recentBets4}} {{'_recentwon_'|i18n}} {{recentBets4B}}</div>-->
+                  </div>
+                    <div class="counter-title">{{'_ColumnRightHeader2_' | i18n}}</div>
+                </div>           
+            </div>
+            <div class="col-4 col-lg-4 column">
+                <div class="counter counter-right">
+                    <div class="counter-numbers">฿ {{totalBitcoin | noFractionCurrency}} BTC</div>
+                    <div class="counter-subtitle" style="margin-top:-1px;">$ {{totalUSD | noFractionCurrency}} USD</div>
+                    <div class="counter-title">{{'_ColumnRightdiv_' | i18n}}</div>
+                </div>
+            </div>
+        </div>
+
+     
+
+        
+        <div class="row game-wrap">
+          <div class="col-12 col-lg-12">
+
+              <ul class="nav nav-tabs nav-justified">
+                  <li ng-class="getTabClass('prizes')" style="cursor: pointer;" ng-click="showTable('prizes')"><a>{{'Prizes' | i18n}}</a></li>
+                   <li ng-class="getTabClass('leaderboard')" style="cursor: pointer;" ng-click="showTable('leaderboard')"><a>{{'_tabs-leaderboard_' | i18n}}</a></li>
+                  <li ng-class="getTabClass('awards')" style="cursor: pointer;" ng-click="showTable('awards')"><a>{{'Awards' | i18n}}</a></li>
+                  <li ng-class="getTabClass('monthly-draw')" style="cursor: pointer;" ng-click="showTable('monthly-draw')"><a>{{'Monthly Prizes' | i18n}}</a></li>
+                  <li ng-class="getTabClass('affiliate')" style="cursor: pointer;" ng-click="showTable('affiliate')"><a>{{'Affiliates' | i18n}}</a></li>
+
+              </ul>
+          </div>
+        </div>
+        <div class="row game-wrap" id="tables" style="min-height:800px;">
+          <div class="col-12 col-lg-12"><!-- data-autoscroll-->
+
+            <div style="width:100%;position:absolute;height:2000px;z-index:2;background-color:#000;" id="termswarning">
+            <h3>Terms &amp; Conditions</h3>
+            <p>By accessing BetCoinPrize.tm or its service, you:</p>
+            <ol><li>
+                Acknowledge that you have read and agree to the website's <a href="#warning" data-toggle="modal">Terms & Conditions available here;</a></li><li>
+                Attest that you are 18 years old or older;</li><li>
+                Affirm that you are in a jurisdiction where the BetCoinPrize.tm service is legal.</li></ol>
+
+
+              <div>I consent to the above terms:  <button  style="margin:0px auto;" ng-click="agreed()" class="btn btn-default">Agree</button></div>
+              <br />
+              <div>
+                I do not consent to the above terms: <button onclick="window.location.href='http://wiki.betcoin.tm';"  class="btn btn-default">Disagree</button></div>
+
+            </div>
+
+            <div data-ng-include data-src="currentTable"></div>
+          </div>
+        </div>
+        <div class="row game-wrap">
+          <div style='margin:20px auto;text-align:center;'>
+
+          <a target="_blank" href="http://wiki.betcoin.tm"><img style="border:0;" src="./images/betcoin-wiki-small.png"/></a></div>
+          <!--<div style="margin:20px auto;text-align:justify;width:700px;">
+            <p><small>
+            {{ '_footerP1_' | i18n }}
+            </small></p>
+            <p><small>
+            {{ '_footerP2_' | i18n }}
+            </small></p>
+
+
+          </div>-->
+        </div>
+      </div>
+</div>

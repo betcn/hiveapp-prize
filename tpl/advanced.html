@@ -1,0 +1,81 @@
+<div id="advanced" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 id="myModalLabel">{{'_AdvancedHeader1_' | i18n}}</h3>
+            </div>
+            <div class="modal-body">
+                <h2>{{'_AdvancedHeader2_' | i18n}}</h2>
+
+                <h3>{{'_AdvancedHeader3_' | i18n}}</h3>
+
+                <p>{{'_AdvancedP1_' | i18n}}</p>
+
+                <h3>{{'_AdvancedHeader4_' | i18n}}</h3>
+
+                <p>{{'_AdvancedP2pt1_' | i18n}}
+                <br/>
+                {{'_AdvancedP2pt2_' | i18n}}
+                <br/>
+                {{'_AdvancedP2pt3_' | i18n}}
+                <br/>
+                {{'_AdvancedP2pt4_' | i18n}}
+                </p>
+
+                <h3>{{'_AdvancedHeader5_' | i18n}}</h3>
+
+                <p>{{'_AdvancedP3_' | i18n}}
+                </p>
+
+                <h3>{{'Transaction lookup'|i18n}}</h3>
+                <p>{{'Enter a transaction ID for a bet or payout transaction'|i18n}}</p>
+
+                <form ng-submit="txSearch()">
+                <fieldset>
+                    <input type="text" id="txQuery" style="width:450px;" ng-model="txQuery" />
+                    <input type="submit" class="btn btn-default"  value="{{'Continue'|i18n}}" />
+                </fieldset></form>
+                <h3 ng-show="txLookupFail">{{txLookupFail}}</h3>
+                <div ng-show="txLookup.tx_in">
+                  <p style="font-size:10px;">{{ txLookup.tx_in }}:{{ txLookup.output_number }}</p>
+                  <ul>
+                      <li>{{'_TrLi1_' | i18n}}{{ txLookup.createdAt | date:"MM/dd/yy HH:mm:ss" }}</li>
+                      <li>{{'_TrLi2_' | i18n}}{{ txLookup.createdAt | date:"MM/dd/yy" }}</li>
+                      <li>{{'_TrLi3_' | i18n}}< {{ txLookup.game }}</li>
+                      <li>{{'_TrLi4_' | i18n}}{{ txLookup.tx_in }}</li>
+                      <li>{{'_TrLi5_' | i18n}}{{ txLookup.tx_out }}</li>
+                      <li>{{'_TrLi6_' | i18n}}{{ txLookup.txOutStatus }}</li>
+                      <li>{{'_TrLi7_' | i18n}}{{ txLookup.wager | btc }}</li>
+                      <li>{{'_TrLi8_' | i18n}}{{ txLookup.winnings > txLookup.wager && "WIN" || "LOSE" }}</li>
+                      <li>{{'_TrLi9_' | i18n}}{{ txLookup.winnings | btc }}</li>
+                      <li>{{'_TrLi10_' | i18n}}{{ txLookup.player_id }}</li>
+                      <li>{{'_TrLi11_' | i18n}}{{ txLookup.result }}</li>
+                  </ul>
+                  <h4>{{'_TrHeader2_' | i18n}}</h4>
+                  <h5>{{'_TrHeader3_' | i18n}}</h5>
+                  <p>{{'_TrP1_' | i18n}}<a target="_blank" href="/dice/hashes.keys">{{'_hashes.keys_' | i18n}}</a></p>
+                  <p>{{'_TrP2_' | i18n}}<a target="_blank" href="/dice/secret.keys">{{'_secret.keys_' | i18n}}</a></p>
+                  <h5>{{'_TrHeader4_' | i18n}}</h5>
+                  <p>{{'_TrP3_' | i18n}}{{ txLookup.keyDate | date:"MM/dd/yy" }} in {{'_hashes.keys_' | i18n}}<br>
+                  sha256(<u><span ng-click="showDiceDetails(txLookup)">{{ secretKey }}</span></u>) -> {{ txLookup.secret_hash }}
+                  </p>
+                  <h5>{{'_TrHeader5_' | i18n}}</h5>
+                  <p>{{'_TrP4_' | i18n}}
+                  </p>
+                  <pre class='data'>
+
+                  hmac_sha512(<u><span ng-click="showDiceDetails(txLookup)">{{ secretKey }}</span></u>, {{ txLookup.tx_in }}:{{ txLookup.output_number }}) -> {{ txLookup.hmachash }}
+                  </pre>
+                  <h5>{{'_TrHeader6_' | i18n}}</h5>
+                  <pre class='data'>{{'_TrP5_' | i18n}}{{ txLookup.hmachash }} -> {{ txLookup.hmachash.substring(0, 4) }} -> {{ txLookup.result }}
+                  </pre>
+                </div>
+
+
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">{{'_CloseButton_' | i18n}}</button>
+            </div>
+        </div>
+    </div>
+</div>

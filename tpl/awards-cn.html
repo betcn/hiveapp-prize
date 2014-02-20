@@ -1,0 +1,45 @@
+<div class="tab-content">
+<h5>{{'Awards' | i18n}}</h5>
+<div style="text-align:justify;width:500px;">
+<p><b>青铜级, 白银级, 黄金级, 铂金级以及钻石级:</b></p>
+<br /><p>
+共有四种奖项:
+</p><ol>
+<li>
+根据在任何一个级别中下注的比特币总额。当玩家下注金额达到1比特币，其获得10个奖励点的奖项, 之后赌注总额再增加5比特币，其获得50个奖励点的奖项, 之后赌注总额再增加10比特币，其获得100个奖励点的奖项, 之后赌注总额再增加50比特币，其获得500个奖励点的奖项  ，之后赌注总额再增加100比特币，其获得1000个奖励点的奖项。 此后循环周期重启。
+</li><li>根据旋转次数，每旋转一次可获得1个奖励点数。
+</li><li>根据旋转次数连环输赢：每次连续赢了5次或连续输了5次，可获得5个奖励点数。
+</li><li>根据罕见赢注：任何一轮的正数乘数等于奖励点数的数额。例如，青铜轮的3倍赢注等于3个奖励点数，钻石轮的25倍赢注则等于25个奖励点数。</li>
+</ol>
+<p>
+***存入任何大小的比特币金额 边可以获得设置别名的奖励。
+</p><p>在任何一个级别中下赢得的奖励点数只在这一个级别中有效，升级更高的级别之后奖励点数计数将想重新开始。</p><p>奖励点数用于确定玩家在其级别中的排名以及确定月奖赢家。
+</p>
+</div>
+<br />
+<h5>{{'Recent Awards'|i18n}}</h5>
+<table class="table table-bordered dicesTable">
+    <thead>
+        <tr>
+            <th>{{'Player' | i18n}}</th>
+            <th>{{'_rewardpoints_' | i18n}}</th>
+            <th>{{'Date' | i18n}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="circle in circles | orderBy:createdAt:reverse">
+            <td class="">
+                {{ circle.player_alias }}
+            </td>
+            <td>
+                {{ calcPoints(circle) }}
+            </td>
+            <td class="">
+                {{ circle.createdAt | date:"MM/dd/yy HH:mm:ss" }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>

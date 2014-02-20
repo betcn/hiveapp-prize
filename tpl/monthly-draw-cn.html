@@ -1,0 +1,56 @@
+<div class="tab-content">
+<h5>财神轮™月奖</h5>
+<div style="text-align:justify;width:500px;">
+<p>每一个级别奖励点数最高的玩家将收到相应的月奖。每月末</p><p>日月奖将自动转至各合格玩家注册的比特币钱包地之中。</p>
+ <ol><li>青铜级: 一等奖 0.01BTC, 二等奖: 0.005 BTC, 三等奖: 0.003 BTC
+</li><li>白银级: 一等奖: 0.1BTC, 二等奖: 0.05 BTC, 三等奖: 0.03 BTC
+</li><li>黄金级: 一等奖: 1 BTC, 二等奖: 0.5 BTC, 三等奖: 0.3 BTC
+</li><li>铂金级: 一等奖: 10BTC, 二等奖: 5BTC, 三等奖: 3 BTC
+</li><li>钻石级: 一等奖: 100BTC, 二等奖: 50 BTC, 三等奖: 30 BTC
+</li></ol>
+</div>
+<br />
+<p>{{'Next Drawing'|i18n}}:  November 1st, 2013</p>
+<br />
+<h5>{{'Recent Prizes'|i18n}}</h5>
+<table class="table table-bordered dicesTable">
+    <thead>
+        <tr>
+            <th>{{'ID'|i18n}}</th>
+            <th>{{'Alias'|i18n}}</th>
+            <th>{{'League'|i18n}}</th>
+            <th>{{'Prize'|i18n}}</th>
+            <th>{{'Reward Points'|i18n}}</th>
+            <th>{{'BTC Won'|i18n}}</th>
+            <th>{{'Date'|i18n}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="prize in prizes | orderBy:createdAt:reverse">
+            <td class="">
+                {{ prize.id }}
+            </td>
+            <td>
+                {{ prize.alias }}
+            </td>
+            <td>
+                {{ prize.league }}
+            </td>
+            <td>
+                {{ prize.prize }}
+            </td>
+            <td>
+                {{ prize.rewardPoints }}
+            </td>
+            <td>
+                {{ prize.btcWon }}
+            </td>
+            <td class="">
+                {{ prize.createdAt | date:"MM/dd/yy HH:mm:ss" }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>

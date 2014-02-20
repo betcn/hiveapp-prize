@@ -1,0 +1,45 @@
+<div class="tab-content">
+<h5>{{'Awards' | i18n}}</h5>
+<div style="text-align:justify;width:500px;">
+<p><b>Bronze, Silver, Gold, Platinum, and Diamond leagues:</b></p>
+<br /><p>
+There are 4 main types of awards:
+</p><ol>
+<li>
+based on total amount amount of BTC wagered in any given league. Once a player wagers a total of 1 BTC - he receives 10 points, then for the next total of 5 BTC - 50 more points, then for the next total of 10 BTC - 100 more points, for the next total of 50 BTC - 500 more points, and for the next total of 100 BTC - 1000 more points. Then the cycle repeats from the beginning.
+</li><li>Based on the number of spins - each spin equals 1 point.
+</li><li>Based on winning/losing streaks - each streak of 5 wins or 5 losses in a row equals 5 points.
+</li><li>Based on rare wins - the positive multiplier on any bet equals the same number of points.<!-- For example, a 3x win on the bronze circle equals 3 reward points, a 25x win on the diamond circle equals 25 points--></li>
+</ol>
+<p>
+***Depositing any amount of BTC automatically enables the alias reset option.
+</p><p>Reward points received in any given league are only valid for that particular league, upon promotion to a higher league, the reward point count is reset.</p><p>Reward points are used to determine a user's placement in his league, and to determine the winners of our Monthly Prizes.
+</p>
+</div>
+<br />
+<h5>{{'Recent Awards'|i18n}}</h5>
+<table class="table table-bordered dicesTable">
+    <thead>
+        <tr>
+            <th>{{'Player' | i18n}}</th>
+            <th>{{'_rewardpoints_' | i18n}}</th>
+            <th>{{'Date' | i18n}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="dice in dices | orderBy:createdAt:reverse">
+            <td class="">
+                <div blockchain-info="{{ dice.player_id }}" chars="8"></div>
+            </td>
+            <td>
+                {{ dice.pointsAwarded }}
+            </td>
+            <td class="">
+                {{ dice.createdAt | date:"MM/dd/yy HH:mm:ss" }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>

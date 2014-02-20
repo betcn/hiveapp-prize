@@ -1,0 +1,89 @@
+<div>
+  <div ng-hide="gamedata" class="alert alert-info">Loading</div>
+  <div ng-show="gamedata" class="gamedata">
+    <div class="row bottom-wrap">
+
+
+      <div class="col-6 col-lg-6">
+        <div class="row">
+          <div class="col-6 col-lg-6 img">
+            <img ng-src="./{{cupimages[gamedata.game]}}"/>
+          </div>
+          <div class="col-6 col-lg-6 info">
+            <h2>{{ gamedata.game }} Day Lottery</h2>
+            <h4>
+              <span ng-show="gamedata.game == 1">Bronze</span>
+              <span ng-show="gamedata.game == 3">Silver</span>
+              <span ng-show="gamedata.game == 7">Gold</span>
+              <span ng-show="gamedata.game == 9">Platinum</span>
+              <span ng-show="gamedata.game == 15">Diamond</span>
+              Prize
+            </h4>
+            <div style="margin:15px 0px;">
+              <a ng-href="game-detail/{{ gamedata._id }}" class="btn btn-sm btn-primary">Details</a>
+              <button ng-show="gameStatus(gamedata) == 'paid'" class="btn btn-sm btn-success" data-toggle="modal" data-target="#{{ gamedata._id }}-modal">Payout Info</button>
+              <span class="label label-danger" ng-show="gameStatus(gamedata) == 'pending'">Payout Pending</span>
+              <span class="label label-primary" ng-show="gameStatus(gamedata) == 'current'">In Progress</span>
+              <span class="label label-danger" ng-show="gameStatus(gamedata) == 'processing'">Processing</span>
+            </div>
+            <div style="margin:10px 0px;">
+                <a ng-click="sendBitcoins(gamedata.address, 'BetCoin+™+Prize+Tickets')"  class="btn btn-sm btn-success"><img style="width:35px;" src="img/multibit-med.png"/></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-6">
+          <gamecounter gamedata="gamedata"></gamecounter>
+          <div style='text-align:center;'>
+          <h2 style="color:#EE0000;margin-top:4px;">Buy Tickets with Bitcoin</h2><h4>
+              <a style="color:#D6AE58;text-decoration:underline;"  ng-click="sendBitcoins(gamedata.address, 'BetCoin+™+Prize+Tickets')">{{gamedata.address}}</a>
+            </h4>
+          </div>
+      </div>
+
+
+    </div>
+
+    <div class="modal" id="{{ gamedata._id }}-modal" tabindex="-1" role="dialog" aria-labelledby="{{ gamedata._id }}" aria-hidden=true>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">{{ gamedata._id }} Payout Info</h4>
+          </div>
+          <div class="modal-body">
+            <p><b>Winner: </b>{{ gamedata.winData.player }}</p>
+            <p><b>Game Hash: </b>{{ gamedata.winData.hash }}</p>
+            <p><b>Hash Partial: </b>{{ gamedata.winData.partial }}</p>
+            <p><b>Ticket Index: </b>{{ gamedata.winData.index | number }}</p>
+            <p><b>Payout TxID: </b>{{ gamedata.payout.txid }}</p>
+            <p><b>Payout Amount: </b>{{ gamedata.payout.amount | btc }} BTC</p>
+            <p><b>Payout Sent: </b>{{ gamedata.payout.sent | date:'M/d/yy HH:mm:ss' }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="{{ gamedata._id }}-qrmodal" tabindex="-1" role="dialog" aria-labelledby="{{ gamedata._id }}" aria-hidden=true>
+      <div class="modal-dialog qr-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>{{ gamedata.game }} Day Lottery</h2>
+            <h6><a style="color:#D6AE58;text-decoration:underline;"  ng-href="bitcoin:{{gamedata.address}}?Label=BetCoin+™+Prize+Tickets">{{gamedata.address}}</a></h6>
+          </div>
+          <div class="modal-body">
+            <img src="./img/qr{{gamedata.game}}.png" style="width:260px;"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

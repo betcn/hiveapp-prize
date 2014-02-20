@@ -1,0 +1,29 @@
+<ul class="nav nav-pills nav-justified">
+    <li ng-class="getLeaderboardTabClass('global')" style="cursor: pointer;" ng-click="showLeaderboardTable('global')"><a>{{'_topPlayers_' | i18n}}</a></li>
+    <li ng-class="getLeaderboardTabClass('bronze')" style="cursor: pointer;" ng-click="showLeaderboardTable('bronze')"><a>{{'_bronze_' | i18n}}</a></li>
+    <li ng-class="getLeaderboardTabClass('silver')" style="cursor: pointer;" ng-click="showLeaderboardTable('silver')"><a>{{'_silver_' | i18n}}</a></li>
+    <li ng-class="getLeaderboardTabClass('gold')" style="cursor: pointer;" ng-click="showLeaderboardTable('gold')"><a>{{'_gold_' | i18n}}</a></li>
+    <li ng-class="getLeaderboardTabClass('platinum')" style="cursor: pointer;" ng-click="showLeaderboardTable('platinum')"><a>{{'_platinum_' | i18n}}</a></li>
+    <li ng-class="getLeaderboardTabClass('diamond')" style="cursor: pointer;" ng-click="showLeaderboardTable('diamond')"><a>{{'_diamond_' | i18n}}</a></li>
+</ul>
+<fieldset id="recent">
+    <table class="table table-bordered dicesTable">
+        <thead>
+        <tr>
+            <th>{{'_alias_' | i18n}}</th>
+            <!-- <th>League</th> -->
+            <th>{{'_rewardpoints_' | i18n}}</th>
+            <th>{{'_btcwon_' | i18n}}</th>
+            <th>{{'_prizeswon_' | i18n}}</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="player in leaderboard">
+                <td>{{ player.alias }}</div></td>
+                <td>{{player.games.dice.currentPoints}}</td>
+                <td>{{player.games.dice.totalWon | btc}}</td>
+                <td>{{player.games.dice.totalPrizes | btc}}</td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>

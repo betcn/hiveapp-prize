@@ -1,0 +1,8 @@
+{
+  "name": "BetCoin Prize",
+  "id": "tm.betcoin.prize",
+  "version": "1.0",
+  "author": "BetCoin",
+  "description": "Hive BetCoin Prize Game",
+  "icon": "hiveapp-icon.png"
+}

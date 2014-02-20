@@ -1,0 +1,57 @@
+<div class="tab-content">
+<h5>BetCoin ™ Circle Monthly Prizes</h5>
+<div style="text-align:justify;width:500px;">
+<p>In each league, a monthly prize will be sent to the registered wallets of the players with the most reward points in their respective leagues on the last day of each month.
+ </p>
+ <ol><li>Bronze League: First prize: 0.01BTC, Second prize: 0.005 BTC, Third Prize: 0.003 BTC
+</li><li>Silver League: First prize: 0.1BTC, Second prize: 0.05 BTC, Third Prize: 0.03 BTC
+</li><li>Gold League: First prize: 1 BTC, Second prize: 0.5 BTC, Third Prize: 0.3 BTC
+</li><li>Platinum League: First prize: 10BTC, Second prize: 5BTC, Third Prize: 3 BTC
+</li><li>Diamond league: First prize: 100BTC, Second prize: 50 BTC, Third Prize: 30 BTC
+</li></ol>
+</div>
+<br />
+<p>{{'Next Drawing'|i18n}}: November 1st, 2013</p>
+<br />
+<h5>{{'Recent Prizes'|i18n}}</h5>
+<table class="table table-bordered dicesTable">
+    <thead>
+        <tr>
+            <th>{{'ID'|i18n}}</th>
+            <th>{{'Alias'|i18n}}</th>
+            <th>{{'League'|i18n}}</th>
+            <th>{{'Prize'|i18n}}</th>
+            <th>{{'Reward Points'|i18n}}</th>
+            <th>{{'BTC Won'|i18n}}</th>
+            <th>{{'Date'|i18n}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr data-ng-repeat="prize in prizes | orderBy:createdAt:reverse">
+            <td class="">
+                {{ prize.id }}
+            </td>
+            <td>
+                {{ prize.alias }}
+            </td>
+            <td>
+                {{ prize.league }}
+            </td>
+            <td>
+                {{ prize.prize }}
+            </td>
+            <td>
+                {{ prize.rewardPoints }}
+            </td>
+            <td>
+                {{ prize.btcWon }}
+            </td>
+            <td class="">
+                {{ prize.createdAt | date:"MM/dd/yy HH:mm:ss" }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>

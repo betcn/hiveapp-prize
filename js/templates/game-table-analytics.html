@@ -1,0 +1,120 @@
+<div>
+
+
+
+    <div ng-hide="games" class="alert alert-info">Loading</div>
+    <div ng-show="games">
+
+        <div ng-repeat="gamedata in games">
+            <div class="row bottom-wrap">
+
+              <div class="col-3 col-lg-3">
+                    <img src="/prize/{{cupimages[gamedata.game]}}" style="width:200px;"/>
+              </div>
+
+
+              <div class="col-9 col-lg-9">
+                <div class="row">
+                    <div class="col-4 col-lg-4">
+                        <h2>{{ gamedata.game }} Day Lottery</h2>    
+
+                        <a ng-href="game-detail/{{ gamedata._id }}" class="btn btn-xs btn-primary">Details</a>       
+                    </div>
+
+                    <div class="col-8 col-lg-8">
+                        <div class="row">
+                            <div class="col-6 col-lg-6 column-bottom">
+                                <div class="counter counter-left">
+                                    <div class="counter-numbers">฿ {{(gamedata.ticketCount*0.001) | btc }} BTC</div>
+                                    <div class="counter-subtitle" style="margin-top:-1px;">$ {{(gamedata.ticketCount*0.001*exchange) | noFractionCurrency}} USD</div>
+                                    <div class="counter-title">Jackpot</div>               
+                                </div>
+                            </div>
+
+                            <div class="col-6 col-lg-6 column-bottom">
+                                <div class="counter counter-right">
+                                    <div class="counter-numbers">{{ timers[gamedata.game].daysLeft }} Days {{ timers[gamedata.game].timeString }}</div>
+                                    <div class="counter-subtitle" style="margin-top:-1px;">Time Left</div>
+                                    <div class="counter-title">Time Left</div>
+                                </div>
+                            </div>
+                        </div>    
+
+                        <div style='text-align:center;'>
+                   
+                        <h5 style="margin:20px auto;"><span style="color:#EE0000;">Buy Tickets with Bitcoin:</span> {{betAddress(gamedata.game)}}</h5>    
+                        <p>Jackpot: <a href="http://blockchain.info/address/{{gamedata.payoutAddress}}">{{gamedata.payoutAddress}}</a></p>   
+
+                        </div>              
+                    </div>
+                </div>
+              </div>  
+                 
+            </div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Bets</th>
+                    <th>Tickets</th>
+                    <th>Payout (BTC)</th>
+                    <th>House Rake (BTC)</th>
+                    <th>Affiliate Rake (BTC)</th>
+                    <th>Prize Rake (BTC)</th>
+                    <th>Total Rake (BTC)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="gamedata in games" ng-class="rowClass(gamedata)">
+                    <td>
+                        {{ gamedata.game }}
+                        <a ng-href="game-detail/{{ gamedata._id }}" class="btn btn-xs btn-primary">Details</a>
+                    </td>
+                    <td>{{ gamedata.start | date:'M/d/yy HH:mm:ss' }}</td>
+                    <td>{{ gamedata.end | date:'M/d/yy HH:mm:ss' }}</td>
+                    <td>{{ gamedata.betCount | number }}</td>
+                    <td>{{ gamedata.ticketCount | number }}</td>
+                    <td>{{ gamedata.totalPayout | btc }}</td>
+                    <td>{{ gamedata.totalHouseRake | btc }}</td>
+                    <td>{{ gamedata.totalAffiliateRake | btc}}</td>
+                    <td>{{ gamedata.totalSavingsRake | btc }}</td>
+                    <td>{{ gamedata.totalRake | btc }}</td>
+                    <td>
+                        <button ng-show="gameStatus(gamedata) == 'paid'" class="btn btn-sm btn-success" data-toggle="modal" data-target="#{{ gamedata._id }}-modal">Payout Info</button>
+                        <span class="label label-danger" ng-show="gameStatus(gamedata) == 'pending'">Payout Pending</span>
+                        <span class="label label-primary" ng-show="gameStatus(gamedata) == 'current'">In Progress</span>
+                        <span class="label label-danger" ng-show="gameStatus(gamedata) == 'processing'">Processing</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-repeat="gamedata in games" class="modal" id="{{ gamedata._id }}-modal" tabindex="-1" role="dialog" aria-labelledby="{{ gamedata._id }}" aria-hidden=true>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">{{ gamedata._id }} Payout Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><b>Winner: </b>{{ gamedata.winData.player }}</p>
+                        <p><b>Game Hash: </b>{{ gamedata.winData.hash }}</p>
+                        <p><b>Hash Partial: </b>{{ gamedata.winData.partial }}</p>
+                        <p><b>Ticket Index: </b>{{ gamedata.winData.index | number }}</p>
+                        <p><b>Payout TxID: </b>{{ gamedata.payout.txid }}</p>
+                        <p><b>Payout Amount: </b>{{ gamedata.payout.amount | btc }} BTC</p>
+                        <p><b>Payout Sent: </b>{{ gamedata.payout.sent | date:'M/d/yy HH:mm:ss' }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

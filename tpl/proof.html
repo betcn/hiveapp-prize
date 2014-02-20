@@ -1,0 +1,86 @@
+<div id="proof">
+
+    <h3>Warning! Do Not Use a Shared Wallet to Buy Tickets!</h3>
+    <p>Only use wallets that allow you to receive Bitcoin from the same address you sent from. If you're not sure, purchase a confirmation-enabled ticket. If you get no response, your wallet is not compatible. Note that tickets require confirmations before processing.</p>
+
+    <h4>Don't have a Bitcoin wallet yet? We recommend:</h4>
+    <ul><li><a rel="nofollow" target="_blank" href="http://blockchain.info">Blockchain.info</a></li>
+    <li><a rel="nofollow" target="_blank" href="https://multibit.org">Multibit</a></li></ul>
+    
+    <h3>Minimum Transaction Size</h3>
+    <h5>0.001 BTC is the minimum transaction amount. Lesser amounts will not be processed or returned!</h5>
+    <h5>0.00105460 BTC is the minimum transaction amount for confirmation-enabled transactions.</h5>    
+
+    <h3>Tickets cost 0.001 BTC each. The main jackpot is 82%</h3>
+ 
+    <p>The main jackpot is comprised of 82% of ticket purchases, plus the jackpot seed.</p>
+    <h3>Jackpot Seed: Free BTC Every Day</h3>
+   <p>Each day, 0.1 BTC is sent to the jackpot address for every lottery. The Jackpot Seed is rewarded to the winner of each lottery. For example, the 15-day Diamond Prize Jackpot Seed is a total of 0.1 BTC * 15 days or 1.5 BTC. The 3-day Bronze Prize Jackpot Seed is 0.1 BTC * 3 days or 0.3 BTC.</p>
+
+    <h3>Leaderboard Bonus</h3>
+    <p>3% of the jackpot for every lottery prize drawing is distributed among the 100 players who bought the most tickets. If there are fewer than 100 players, the 3% is equally distributed amongst all the players who bought tickets for each drawing.</p>
+
+
+    <h3>How to Play</h3>
+    <ul><li>Select a prize: 1-day Bronze, 3-day Silver, 7-day Gold, 9-day Platinum, or 15-day Diamond</li>
+    <li>Buy any number of tickets by sending Bitcoin to the addresses below in increments of 0.001 BTC, plus any amount above 0.00005460 to receive a confirmation transaction</li>
+    <li>Wait for your prize to be drawn, watch the jackpot grow. Your winnings will be automatically sent to your wallet</li>
+    <li>New to Bitcoin? Check out <a href='http://wiki.betcoin.tm'>BetCoin ™ Wiki</a> and <a href='http://connect.betcoin.tm'>BetCoin ™ Connect</a></li></ul>
+
+    <h4>Buy Multiple Tickets</h4>
+    <p>Multiple tickets can be purchased with one transaction. For example, to buy 10 tickets for the 1 day lottery, send 0.01 BTC to 1Prize1WfNVLyQFF3rmwFGkrmBMrgtBZYo. <em≥Any amount below 0.001 BTC will not be returned.</em></p>
+    <h4>How to Receive a Confirmation Transaction</h4>
+    <p>If you would like to recieve confirmation of your tickets being processed, send an additional amount of at least 0.00005460 with your ticket purchase, and it will be retuned to you during ticket processing. <em≥Any amount below 0.00005460 will not be returned.</em></p>
+    <h4>Prizes are drawn at Midnight GMT</h4>
+    <p>When the prize drawing occurs, the game winner is selected by creating an hmac hash of the transaction IDs from all of the transactions which were used to purchase tickets, hashed with the game ID. The smallest hex value that will allow selection from all purchased tickets is used from the front of the resulting hash. This "lucky number" is used to select an index from among the purchased tickets.</p>    
+
+
+    <h4>Ticket Processing</h4>
+    <p>We process tickets as soon as it's possible to do so using a standard Bitcoin transaction. When ticket processing occurs, a confirmation transaction is sent to the jackpot address.</p>
+
+    <h4>Cut-Off Time</h4>
+    <p><b><em>Buy your tickets at least 12 hours before the end of a lottery to ensure it is processed!</em></b> Once your ticket purchase has reached 4 confirmations, it will be added to the currently active lottery <em>at the time of processing.</em> If your tickets are processed after the cut-off time for your lottery drawing, they will be applied to the next lottery drawing.</p> 
+
+    <h4>Jackpot vs. Ticket Addresses</h4>
+    <p>The ticket address for a game is listed on the home page, and this is the address used to buy tickets for that lottery. The link to the jackpot address directs to the blockchain.info page for the address being used by the running lottery to payout the winning ticket holder. <b>Do <em>NOT</em> send BTC to the jackpot address, it will not be processed!</b>.</p>
+
+    <h4>Consolidation and Payouts</h4>
+    <p>Periodically throughout the game period, the transactions sent to the jackpot will be consolidated so that the winner can be paid in a single transaction. The fees used for this come out of the house rake.</p>
+    <p>In some cases, when a consolidation transaction is made, the balance on the blockchain.info page for the jackpot address may appear to be different than the listed jackpot on our home page. The discrepency should only last until the consolidation transaction (and the transactions it consolidated) have been confirmed</p>
+    <h4>How to Prove the Winner Was Selected at Random</h4>
+    <p>The following node.js script can be used to validate prize drawing data:</p>
+    <pre>
+var getWinner = function(gameData) {
+    var ticketBin = [];
+    var hmac = crypto.createHmac('sha512', gameData._id);
+    gameData.bets.forEach(function(bet) {
+        for(var i = 0; i < bet.tickets; i++) {
+            ticketBin.push(bet.playerAddress);
+        }
+        hmac.update(bet.txid);
+    });
+    logger.log('info', '%d tickets', ticketBin.length);
+    var gameHash = hmac.digest('hex');
+    var lucky = NaN;
+    var partial = "";
+    var winIndex = -1;
+    var powerFound = false;
+    for (var power = 1; powerFound === false; power++) {
+        var maxroll = Math.pow(16, power);
+        if (maxroll >= ticketBin.length) {
+            partial = gameHash.substring(0, power);
+            lucky = parseInt(partial, 16);
+            winIndex = Math.floor((ticketBin.length / maxroll) * lucky);
+            powerFound = true;
+        }
+    }
+    logger.log('info', 'power: %d, partial: %s', power - 1, partial);
+    return {
+        player: ticketBin[winIndex],
+        hash: gameHash,
+        partial: partial,
+        index: winIndex
+    };
+};
+    </pre>
+</div>

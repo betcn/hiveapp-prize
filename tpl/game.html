@@ -1,0 +1,22 @@
+<div>
+    <h3>Next Drawing</h3>
+    <div class="alert alert-info" ng-hide="current">Loading</div>
+    <div class="panel panel-primary" ng-show="current">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Drawing {{ current.game }} @ {{ current.start | date:'M/d/yy h:mm:ss a' }} ({{ current._id }})
+            </h4>
+        </div>
+        <div class="panel-body">
+            <p><b>Jackpot: </b>{{ current.totalPayout | btc }} BTC</p>
+            <p><b>Tickets: </b>{{ current.ticketCount | number }}</p>
+            <p><b>Bets: </b>{{ current.betCount | number }}</p>
+            <p><a ng-href="game-detail/{{ current._id }}" class="btn btn-primary">Details</a></p>
+            <gamechart id="game-{{game}}-stats" gamedata="current"></gamechart>
+        </div>
+    </div>
+    <h3>Drawing {{game}} Totals (all time)</h3>
+    <gametotals game="game"></gametotals>
+    <h3>Drawing {{game}} Recent Drawings</h3>
+    <gametable games="currentTable"></gametable>
+</div>
