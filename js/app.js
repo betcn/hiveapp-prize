@@ -14,7 +14,8 @@ var appDeps = [
     'application.filters',
     'application.services',
     'application.directives',
-    'application.controllers'
+    'application.controllers',
+    'localization'
 ];
 
 var run = function($rootScope, $route, $location, CurrentGameData, BTCExchangeRate) {

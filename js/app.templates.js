@@ -1,6 +1,15 @@
 angular.module('bc.main').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('tpl/404.html',
+    "<div>\n" +
+    "    <h3>Oops..</h3>\n" +
+    "    <p>The page you are looking for cannot be found</p>\n" +
+    "    <p>Try the <a href=\" \">home page</a></p>\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('tpl/advanced.html',
     "<div id=\"advanced\" class=\"modal fade\">\n" +
     "    <div class=\"modal-dialog\">\n" +
@@ -943,6 +952,17 @@ angular.module('bc.main').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('tpl/preloader.html',
+    "<div id=\"loading-mask\" style=\"\"> \n" +
+    "\t<img src=\"img/betcoin.png\" class=\"img-responsive img-centered\">\n" +
+    "\t<div class=\"progress progress-striped active\">\n" +
+    "\t\t<div class=\"progress-bar\"  role=\"progressbar\" aria-valuenow=\"100\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 100%\">\n" +
+    "\t\t</div>\n" +
+    "\t</div>\n" +
+    "</div>"
+  );
+
+
   $templateCache.put('tpl/press.html',
     "<div id=\"press\" class=\"modal fade\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n" +
     "\t<div class=\"modal-dialog\">\n" +
@@ -977,7 +997,7 @@ angular.module('bc.main').run(['$templateCache', function($templateCache) {
     "\t\t\t\t</ul>\n" +
     "\t\t\t</div>\n" +
     "\t\t\t<div class=\"modal-footer\">\n" +
-    "\t\t\t\t<button class=\"btn btn-default\" data-dismiss=\"modal\" aria-hidden=\"true\">{{'_CloseButton_' | i18n}}</button>\n" +
+    "\t\t\t\t<button class=\"btn btn-primary\" data-dismiss=\"modal\" aria-hidden=\"true\">{{'_CloseButton_' | i18n}}</button>\n" +
     "\t\t\t</div>\n" +
     "\t\t</div>\n" +
     "\t</div>\n" +
@@ -1090,15 +1110,17 @@ angular.module('bc.main').run(['$templateCache', function($templateCache) {
   $templateCache.put('tpl/search.html',
     "<div class=\"tab-content\">\n" +
     "    <div style=\"margin-bottom:20px;\">\n" +
-    "        <form class=\"form-inline\" ng-submit=\"executeSearch()\" role=\"form\">\n" +
+    "        <form class=\"form-inline\" role=\"form\" ng-submit=\"executeSearch()\">\n" +
     "            <div class=\"form-group\">\n" +
     "                <label class=\"sr-only\" for=\"search-query\">Search Query</label>\n" +
     "                <input type=\"text\" class=\"form-control\" id=\"search-query\" ng-model=\"search\" placeholder=\"Enter Search\" required />\n" +
     "            </div>\n" +
-    "            <div class=\"radio\">\n" +
-    "                <label><input type=\"radio\" ng-model=\"searchType\" value=\"address\">Address </label>\n" +
-    "                <label><input type=\"radio\" ng-model=\"searchType\" value=\"txid\">TXID </label>\n" +
-    "                <label><input type=\"radio\" ng-model=\"searchType\" value=\"gameid\">Game ID </label>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <select name=\"searchType\" class=\"form-control\" ng-model=\"searchType\">\n" +
+    "                    <option value=\"address\">Address</option>\n" +
+    "                    <option value=\"txid\">TXID</option>\n" +
+    "                    <option value=\"gameid\">Game ID </option>\n" +
+    "                </select>\n" +
     "            </div>\n" +
     "            <button type=\"submit\" class=\"btn btn-primary\">Search</button>\n" +
     "        </form>\n" +
@@ -1378,142 +1400,260 @@ angular.module('bc.main').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('tpl/whatisbitcoin.html',
-    "<div id=\"whatisbitcoin\" class=\"modal fade\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n" +
-    "\t<div class=\"modal-dialog\">\n" +
-    "\t\t<div class=\"modal-content\">\n" +
-    "\t\t\t<div class=\"modal-header\">\n" +
-    "\t\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">×</button>\n" +
-    "\t\t\t\t<h3 id=\"myModalLabel\">What is Bitcoin?</h3>\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t<div class=\"modal-body\">\n" +
+  $templateCache.put('tpl/whatisbitcoin-page.html',
+    "<div class=\"panel panel-default main-container\">\n" +
+    "\t<div class=\"panel-body\">\n" +
+    "\t\t<h3>How to use Bitcoin</h4>\n" +
+    "\t\t<hr>\n" +
+    "\t\t<p>\n" +
+    "\t\tBitcoin is truly the currency of the future: it is not controlled by any government or interest group and is fully controlled by the community of users. Bitcoin has become a worldwide phenomenon and hundreds of businesses start accepting the currency every day. Now is the right time to start using the currency yourself.\n" +
+    "\t\tIn this short guide we will explain what you need to know to start using bitcoin today!\n" +
+    "\t\t</p>\n" +
+    "\t\t<br>\n" +
+    "\t\t<h3>Your Bitcoin Wallet</h3>\n" +
+    "\t\t<hr>\n" +
+    "\t\t<p>The first thing you need to do is open a wallet. Wallet are used to store bitcoin that you have bought or mined.\n" +
+    "\t\tThere are many wallet providers, some that will require that you install a software on your computer (your bitcoin are then physically stored in your hard drive) and some that based entirely on the web.\n" +
+    "\t\tThe web wallets are very convenient and it only take a few minutes to open your account. Conversely, downloading wallet software, using “cold storage” addresses and/or printed copies of the wallet are all options for storage of Bitcoin.\n" +
+    "\t\tWeb-based wallets and downloadable wallets each have pros and cons. It is always recommended to store large amounts of Bitcoin in cold storage.\n" +
+    "\t\t</p>\n" +
     "\n" +
-    "\t\t\t\t<h3>How to use Bitcoin</h4>\n" +
+    "\t\t<p>\n" +
+    "\t\tIn any case, these wallet providers are trusted in the community and offer a high level of security:\n" +
+    "\t\t</p>\n" +
+    "\t\t<ul> \n" +
+    "\t\t<li>Blockchain (web based)</li>\n" +
+    "\t\t<li>Coinbase (web based)</li>\n" +
+    "\t\t<li>BitcoinQT (software)</li>\n" +
+    "\t\t<li>Armory (software)</li>\n" +
+    "\t\t<li>Multibit (software)</li>\n" +
+    "\t\t</ul>\n" +
+    "\t\t<br>\n" +
+    "\t\t<h3>Obtaining Bitcoin</h3>\n" +
+    "\t\t<hr>\n" +
+    "\t\t<p>\n" +
+    "\t\tNow that you have created your wallet, you need to obtain some bitcoin. there are three ways that you can do that:\n" +
+    "\t\t</p>\n" +
     "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tBitcoin is truly the currency of the future: it is not controlled by any government or interest group and is fully controlled by the community of users. Bitcoin has become a worldwide phenomenon and hundreds of businesses start accepting the currency every day. Now is the right time to start using the currency yourself.\n" +
-    "\t\t\t\tIn this short guide we will explain what you need to know to start using bitcoin today!\n" +
-    "\t\t\t\t</p>\n" +
+    "\t\t<ul>\n" +
+    "\t\t<li>Mining bitcoin</li>\n" +
+    "\t\t<li>Purchasing bitcoin</li>\n" +
+    "\t\t<li>Getting free bitcoin</li>\n" +
+    "\t\t<li>Mining bitcoin</li>\n" +
+    "\t\t</ul>\n" +
     "\n" +
-    "\t\t\t\t<h3>Your Bitcoin Wallet</h3>\n" +
+    "\t\t<p>\n" +
+    "\t\tMining is the original way to obtain bitcoin. The bitcoins are mined by resolving increasingly difficult mathematical problems. to resolve the problem you have to dedicate computational power and if you are the first to resolve the problem you obtain the bitcoin reward.\n" +
+    "\t\t</p>\n" +
+    "\t\t<p>\n" +
+    "\t\tThe problems have become extremely difficult to resolve and now require enormous computational power. You can buy specialized mining equipment (computers designed especially to mine bitcoin) but to have a decent chance of solving problems you will probably need very advanced material which can be very costly.\n" +
+    "\t\t</p>\n" +
+    "\t\t<p>\n" +
+    "\t\tIf you are not interested in purchasing expensive equipment you can also join a mining pool which is the association of multiple people to work together to solve problem and then the reward is split equitably between the participants.\n" +
+    "\t\tIn any case, mining bitcoin may take a lot of time so many people actually purchase their bitcoin.\n" +
+    "\t\t</p>\n" +
+    "\t\t<br>\n" +
+    "\t\t<h3>Purchasing Bitcoin</h3>\n" +
+    "\t\t<hr>\n" +
+    "\t\t<p>\n" +
+    "\t\tPeople who have bitcoin can sell them on bitcoin exchanges such as Mt. Gox or BitStamp. these exchanges will let you register a bank account and wire fiat currency to the exchange so that you can purchase bitcoin from sellers. The price of bitcoin is somewhat volatile but is stabilizing as many people are now starting to use it to purchase goods and services rather than just speculating with it.\n" +
+    "\t\t</p>\n" +
+    "\t\t<p>\n" +
+    "\t\tIf you prefer buying the bitcoin in person, you can do so in many cities and directories such as <a href=\"http://localbitcoins.com/\" target=\"_blank\">localbitcoins.com</a> will let you find people who want to sell bitcoin directly.\n" +
+    "\t\t</p>\n" +
+    "\t\t<p>\n" +
+    "\t\tFinally, there are businesses such as <a href=\"http://superbit.hk/\" target=\"_blank\">Superbit.hk</a> who offer bitcoin as a bonus for a product purchase. <a href=\"http://superbit.hk/\" target=\"_blank\">Superbit.hk</a> will for instance send you the full value of your purchase as a bitcoin bonus. A small commission is taken in the process but with services such as this one you can purchase bitcoin rapidly and with your credit card.\n" +
+    "\t\t</p>\n" +
+    "\t\t<br>\n" +
+    "\t\t<h3>Getting free Bitcoin</h3>\n" +
+    "\t\t<hr>\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tOn the web you can find many companies willing to offer bitcoins as a reward to complete tasks such as watching a video or advertisement. A quick search on Google will uncover a lot of these sites but the bitcoin you will receive as a bonus is generally a tiny amount so you might need to complete many tasks before having a meaningful amount of bitcoin.\n" +
+    "\t\t</p>\n" +
+    "\t\t<br>\n" +
+    "\t\t<h3>Using Bitcoin</h3>\n" +
+    "\t\t<hr>\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tUsing bitcoin is incredibly easy and works almost like cash, only in an electronic form.\n" +
+    "\t\tIf you want to transfer bitcoin to a person or business you need to go to your wallet and \"send\" bitcoin to the wallet address of the recipient. The person or business will give you the address to send the bitcoin to and you can add a message along with your bitcoin so that the recipient know exactly why he has received the bitcoin.\n" +
+    "\t\t</p>\n" +
+    "\t\t<p>\n" +
+    "\t\tBusinesses may require that you also send an email with the transaction ID or your own wallet address so that they can identify you as the buyer and send you your goods or services.\n" +
+    "\t\tBitcoin transaction are nearly instant and cannot be reversed, so make sure that you are sending your bitcoin to the right address.\n" +
+    "\t\t</p>\n" +
+    "\t\t<p>\n" +
+    "\t\tAfter a few bitcoin operations, the process will become second nature and it will feel as easy as paying in cash and easier than paying with your credit card!\n" +
+    "\t\t</p>\n" +
     "\n" +
-    "\t\t\t\t<p>The first thing you need to do is open a wallet. Wallet are used to store bitcoin that you have bought or mined.\n" +
-    "\t\t\t\tThere are many wallet providers, some that will require that you install a software on your computer (your bitcoin are then physically stored in your hard drive) and some that based entirely on the web.\n" +
-    "\t\t\t\tThe web wallets are very convenient and it only take a few minutes to open your account. Conversely, downloading wallet software, using “cold storage” addresses and/or printed copies of the wallet are all options for storage of Bitcoin.\n" +
-    "\t\t\t\tWeb-based wallets and downloadable wallets each have pros and cons. It is always recommended to store large amounts of Bitcoin in cold storage.\n" +
-    "\t\t\t\t</p>\n" +
+    "\t\t<br>\t\t\n" +
+    "\t\t<h3>What is Bitcoin</h3>\n" +
+    "\t\t<hr>\n" +
+    "\t\t<p>\n" +
+    "\t\tBitcoin is a digital currency that can be used on the web or in the real world to complete financial transactions such as purchasing goods and services or transferring money to someone.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tThe digital money can be sent instantly over the web and is a secure and trustworthy way to transfer value from one person to another or company. the transaction fees are minimal and the transaction nearly instant. Transactions cannot be reversed.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\t\n" +
+    "\t\tThe digital money is transferred to the recipient and the proof of the transaction is kept in a public ledger (named the “block chain”) which records all transactions made with bitcoin.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tThe ledger cannot be altered as it is stored on every network participants' computers so the digital money can only be transferred to one person. Double spending is impossible, because the ledger proves what account sent bitcoin to which account and this bitcoin can now only be spent or sent from the account that received it.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tBitcoin transactions are almost instantaneous and are completed when the network of user (automatically) validates the transfer and acknowledges that the bitcoin have been transferred and were transferable (not already spent).\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tBitcoin wallets that can be web based or downloaded on ones computer are used for sending and receiving bitcoin.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tTo obtain bitcoin, the original method is to mine them which is done by dedicating computational power to the validation and tracking of bitcoin transactions in the ledger.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
+    "\t\t<p>\n" +
+    "\t\tTo validate and record the transactions, the network needs to resolve problems generated by an algorithm and the first miner to resolve the problem gets rewarded with new bitcoin that he can then spend or sell. The problems to solve are increasingly difficult so more and more computational power will be needed to resolve them.\n" +
+    "\t\t</p>\n" +
     "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tIn any case, these wallet providers are trusted in the community and offer a high level of security:\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<ul> \n" +
-    "\t\t\t\t<li>Blockchain (web based)</li>\n" +
-    "\t\t\t\t<li>Coinbase (web based)</li>\n" +
-    "\t\t\t\t<li>BitcoinQT (software)</li>\n" +
-    "\t\t\t\t<li>Armory (software)</li>\n" +
-    "\t\t\t\t<li>Multibit (software)</li>\n" +
-    "\t\t\t\t</ul>\n" +
-    "\n" +
-    "\t\t\t\t<h3>Obtaining Bitcoin</h3>\n" +
-    "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tNow that you have created your wallet, you need to obtain some bitcoin. there are three ways that you can do that:\n" +
-    "\t\t\t\t</p>\n" +
-    "\n" +
-    "\t\t\t\t<ul>\n" +
-    "\t\t\t\t<li>Mining bitcoin</li>\n" +
-    "\t\t\t\t<li>Purchasing bitcoin</li>\n" +
-    "\t\t\t\t<li>Getting free bitcoin</li>\n" +
-    "\t\t\t\t<li>Mining bitcoin</li>\n" +
-    "\t\t\t\t</ul>\n" +
-    "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tMining is the original way to obtain bitcoin. The bitcoins are mined by resolving increasingly difficult mathematical problems. to resolve the problem you have to dedicate computational power and if you are the first to resolve the problem you obtain the bitcoin reward.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tThe problems have become extremely difficult to resolve and now require enormous computational power. You can buy specialized mining equipment (computers designed especially to mine bitcoin) but to have a decent chance of solving problems you will probably need very advanced material which can be very costly.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tIf you are not interested in purchasing expensive equipment you can also join a mining pool which is the association of multiple people to work together to solve problem and then the reward is split equitably between the participants.\n" +
-    "\t\t\t\tIn any case, mining bitcoin may take a lot of time so many people actually purchase their bitcoin.\n" +
-    "\t\t\t\t</p>\n" +
-    "\n" +
-    "\t\t\t\t<h3>Purchasing Bitcoin</h3>\n" +
-    "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tPeople who have bitcoin can sell them on bitcoin exchanges such as Mt. Gox or BitStamp. these exchanges will let you register a bank account and wire fiat currency to the exchange so that you can purchase bitcoin from sellers. The price of bitcoin is somewhat volatile but is stabilizing as many people are now starting to use it to purchase goods and services rather than just speculating with it.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tIf you prefer buying the bitcoin in person, you can do so in many cities and directories such as <a href=\"http://localbitcoins.com/\" target=\"_blank\">localbitcoins.com</a> will let you find people who want to sell bitcoin directly.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tFinally, there are businesses such as <a href=\"http://superbit.hk/\" target=\"_blank\">Superbit.hk</a> who offer bitcoin as a bonus for a product purchase. <a href=\"http://superbit.hk/\" target=\"_blank\">Superbit.hk</a> will for instance send you the full value of your purchase as a bitcoin bonus. A small commission is taken in the process but with services such as this one you can purchase bitcoin rapidly and with your credit card.\n" +
-    "\t\t\t\t</p>\n" +
-    "\n" +
-    "\t\t\t\t<h3>Getting free Bitcoin</h3>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tOn the web you can find many companies willing to offer bitcoins as a reward to complete tasks such as watching a video or advertisement. A quick search on Google will uncover a lot of these sites but the bitcoin you will receive as a bonus is generally a tiny amount so you might need to complete many tasks before having a meaningful amount of bitcoin.\n" +
-    "\t\t\t\t</p>\n" +
-    "\n" +
-    "\t\t\t\t<h3>Using Bitcoin</h3>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tUsing bitcoin is incredibly easy and works almost like cash, only in an electronic form.\n" +
-    "\t\t\t\tIf you want to transfer bitcoin to a person or business you need to go to your wallet and \"send\" bitcoin to the wallet address of the recipient. The person or business will give you the address to send the bitcoin to and you can add a message along with your bitcoin so that the recipient know exactly why he has received the bitcoin.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tBusinesses may require that you also send an email with the transaction ID or your own wallet address so that they can identify you as the buyer and send you your goods or services.\n" +
-    "\t\t\t\tBitcoin transaction are nearly instant and cannot be reversed, so make sure that you are sending your bitcoin to the right address.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tAfter a few bitcoin operations, the process will become second nature and it will feel as easy as paying in cash and easier than paying with your credit card!\n" +
-    "\t\t\t\t</p>\n" +
-    "\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<h3>What is Bitcoin</h3>\n" +
-    "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tBitcoin is a digital currency that can be used on the web or in the real world to complete financial transactions such as purchasing goods and services or transferring money to someone.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tThe digital money can be sent instantly over the web and is a secure and trustworthy way to transfer value from one person to another or company. the transaction fees are minimal and the transaction nearly instant. Transactions cannot be reversed.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\t\n" +
-    "\t\t\t\tThe digital money is transferred to the recipient and the proof of the transaction is kept in a public ledger (named the “block chain”) which records all transactions made with bitcoin.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tThe ledger cannot be altered as it is stored on every network participants' computers so the digital money can only be transferred to one person. Double spending is impossible, because the ledger proves what account sent bitcoin to which account and this bitcoin can now only be spent or sent from the account that received it.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tBitcoin transactions are almost instantaneous and are completed when the network of user (automatically) validates the transfer and acknowledges that the bitcoin have been transferred and were transferable (not already spent).\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tBitcoin wallets that can be web based or downloaded on ones computer are used for sending and receiving bitcoin.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tTo obtain bitcoin, the original method is to mine them which is done by dedicating computational power to the validation and tracking of bitcoin transactions in the ledger.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t\t\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tTo validate and record the transactions, the network needs to resolve problems generated by an algorithm and the first miner to resolve the problem gets rewarded with new bitcoin that he can then spend or sell. The problems to solve are increasingly difficult so more and more computational power will be needed to resolve them.\n" +
-    "\t\t\t\t</p>\n" +
-    "\n" +
-    "\t\t\t\t<p>\n" +
-    "\t\t\t\tA simpler way to obtain bitcoin is to exchange fiat currency for them which can be done in bitcoin exchanges.\n" +
-    "\t\t\t\tThe value of the bitcoin has varied immensely in its history as it was mostly a medium for speculation at first but the crypto-currency is now used by many people around the world to purchase goods and services. Therefore the value of the currency has stabilized somewhat and should stabilize further as more and more businesses and people start accepting it for payment.\n" +
-    "\t\t\t\t</p>\n" +
-    "\t\t\t</div>\n" +
-    "\t\t\t<div class=\"modal-footer\">\n" +
-    "\t\t\t\t<button class=\"btn btn-default\" data-dismiss=\"modal\" aria-hidden=\"true\">{{'_CloseButton_' | i18n}}</button>\n" +
-    "\t\t\t</div>\n" +
-    "\t\t</div>\n" +
+    "\t\t<p>\n" +
+    "\t\tA simpler way to obtain bitcoin is to exchange fiat currency for them which can be done in bitcoin exchanges.\n" +
+    "\t\tThe value of the bitcoin has varied immensely in its history as it was mostly a medium for speculation at first but the crypto-currency is now used by many people around the world to purchase goods and services. Therefore the value of the currency has stabilized somewhat and should stabilize further as more and more businesses and people start accepting it for payment.\n" +
+    "\t\t</p>\n" +
+    "\t\t\n" +
     "\t</div>\n" +
-    "</div>"
+    "</div>\n"
+  );
+
+
+  $templateCache.put('tpl/whatisbitcoin.html',
+    "<div class=\"container\">\n" +
+    "    <h3>What is Bitcoin?</h3>\n" +
+    "\n" +
+    "    <h4>How to use Bitcoin</h4>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        Bitcoin is truly the currency of the future: it is not controlled by any government or interest group and is fully controlled by the community of users. Bitcoin has become a worldwide phenomenon and hundreds of businesses start accepting the currency every day. Now is the right time to start using the currency yourself.\n" +
+    "        In this short guide we will explain what you need to know to start using bitcoin today!\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <h4>Your Bitcoin Wallet</h4>\n" +
+    "\n" +
+    "    <p>The first thing you need to do is open a wallet. Wallet are used to store bitcoin that you have bought or mined.\n" +
+    "        There are many wallet providers, some that will require that you install a software on your computer (your bitcoin are then physically stored in your hard drive) and some that based entirely on the web.\n" +
+    "        The web wallets are very convenient and it only take a few minutes to open your account. Conversely, downloading wallet software, using “cold storage” addresses and/or printed copies of the wallet are all options for storage of Bitcoin.\n" +
+    "        Web-based wallets and downloadable wallets each have pros and cons. It is always recommended to store large amounts of Bitcoin in cold storage.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        In any case, these wallet providers are trusted in the community and offer a high level of security:\n" +
+    "    </p>\n" +
+    "    <ul> \n" +
+    "        <li>Blockchain (web based)</li>\n" +
+    "        <li>Coinbase (web based)</li>\n" +
+    "        <li>BitcoinQT (software)</li>\n" +
+    "        <li>Armory (software)</li>\n" +
+    "        <li>Multibit (software)</li>\n" +
+    "    </ul>\n" +
+    "\n" +
+    "    <h4>Obtaining Bitcoin</h4>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        Now that you have created your wallet, you need to obtain some bitcoin. there are three ways that you can do that:\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <ul>\n" +
+    "        <li>Mining bitcoin</li>\n" +
+    "        <li>Purchasing bitcoin</li>\n" +
+    "        <li>Getting free bitcoin</li>\n" +
+    "        <li>Mining bitcoin</li>\n" +
+    "    </ul>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        Mining is the original way to obtain bitcoin. The bitcoins are mined by resolving increasingly difficult mathematical problems. to resolve the problem you have to dedicate computational power and if you are the first to resolve the problem you obtain the bitcoin reward.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "        The problems have become extremely difficult to resolve and now require enormous computational power. You can buy specialized mining equipment (computers designed especially to mine bitcoin) but to have a decent chance of solving problems you will probably need very advanced material which can be very costly.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "        If you are not interested in purchasing expensive equipment you can also join a mining pool which is the association of multiple people to work together to solve problem and then the reward is split equitably between the participants.\n" +
+    "        In any case, mining bitcoin may take a lot of time so many people actually purchase their bitcoin.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <h4>Purchasing Bitcoin</h4>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        People who have bitcoin can sell them on bitcoin exchanges such as Mt. Gox or BitStamp. these exchanges will let you register a bank account and wire fiat currency to the exchange so that you can purchase bitcoin from sellers. The price of bitcoin is somewhat volatile but is stabilizing as many people are now starting to use it to purchase goods and services rather than just speculating with it.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "        If you prefer buying the bitcoin in person, you can do so in many cities and directories such as <a href=\"http://localbitcoins.com/\" target=\"_blank\">localbitcoins.com</a> will let you find people who want to sell bitcoin directly.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "        Finally, there are businesses such as <a href=\"http://superbit.hk/\" target=\"_blank\">Superbit.hk</a> who offer bitcoin as a bonus for a product purchase. <a href=\"http://superbit.hk/\" target=\"_blank\">Superbit.hk</a> will for instance send you the full value of your purchase as a bitcoin bonus. A small commission is taken in the process but with services such as this one you can purchase bitcoin rapidly and with your credit card.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <h4>Getting free Bitcoin</h4>\n" +
+    "    <p>\n" +
+    "        On the web you can find many companies willing to offer bitcoins as a reward to complete tasks such as watching a video or advertisement. A quick search on Google will uncover a lot of these sites but the bitcoin you will receive as a bonus is generally a tiny amount so you might need to complete many tasks before having a meaningful amount of bitcoin.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <h4>Using Bitcoin</h4>\n" +
+    "    <p>\n" +
+    "        Using bitcoin is incredibly easy and works almost like cash, only in an electronic form.\n" +
+    "        If you want to transfer bitcoin to a person or business you need to go to your wallet and \"send\" bitcoin to the wallet address of the recipient. The person or business will give you the address to send the bitcoin to and you can add a message along with your bitcoin so that the recipient know exactly why he has received the bitcoin.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "        Businesses may require that you also send an email with the transaction ID or your own wallet address so that they can identify you as the buyer and send you your goods or services.\n" +
+    "        Bitcoin transaction are nearly instant and cannot be reversed, so make sure that you are sending your bitcoin to the right address.\n" +
+    "    </p>\n" +
+    "    <p>\n" +
+    "        After a few bitcoin operations, the process will become second nature and it will feel as easy as paying in cash and easier than paying with your credit card!\n" +
+    "    </p>\n" +
+    "\n" +
+    "\n" +
+    "    <h4>What is Bitcoin</h4>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        Bitcoin is a digital currency that can be used on the web or in the real world to complete financial transactions such as purchasing goods and services or transferring money to someone.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        The digital money can be sent instantly over the web and is a secure and trustworthy way to transfer value from one person to another or company. the transaction fees are minimal and the transaction nearly instant. Transactions cannot be reversed.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>     \n" +
+    "        The digital money is transferred to the recipient and the proof of the transaction is kept in a public ledger (named the “block chain”) which records all transactions made with bitcoin.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        The ledger cannot be altered as it is stored on every network participants' computers so the digital money can only be transferred to one person. Double spending is impossible, because the ledger proves what account sent bitcoin to which account and this bitcoin can now only be spent or sent from the account that received it.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        Bitcoin transactions are almost instantaneous and are completed when the network of user (automatically) validates the transfer and acknowledges that the bitcoin have been transferred and were transferable (not already spent).\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        Bitcoin wallets that can be web based or downloaded on ones computer are used for sending and receiving bitcoin.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        To obtain bitcoin, the original method is to mine them which is done by dedicating computational power to the validation and tracking of bitcoin transactions in the ledger.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        To validate and record the transactions, the network needs to resolve problems generated by an algorithm and the first miner to resolve the problem gets rewarded with new bitcoin that he can then spend or sell. The problems to solve are increasingly difficult so more and more computational power will be needed to resolve them.\n" +
+    "    </p>\n" +
+    "\n" +
+    "    <p>\n" +
+    "        A simpler way to obtain bitcoin is to exchange fiat currency for them which can be done in bitcoin exchanges.\n" +
+    "        The value of the bitcoin has varied immensely in its history as it was mostly a medium for speculation at first but the crypto-currency is now used by many people around the world to purchase goods and services. Therefore the value of the currency has stabilized somewhat and should stabilize further as more and more businesses and people start accepting it for payment.\n" +
+    "    </p>\n" +
+    "</div>\n"
   );
 
 
@@ -1588,6 +1728,30 @@ angular.module('bc.main').run(['$templateCache', function($templateCache) {
     "    </div>\n" +
     "  </div>\n" +
     "</div>"
+  );
+
+
+  $templateCache.put('tpl/wheretogetbitcoin.html',
+    "<div class=\"container\">\n" +
+    "    <h3>Where to Get BitCoin</h3>\n" +
+    "    <h4>Using Credit Card</h4>\n" +
+    "    <ul>\n" +
+    "        <li><a target=\"_blank\" href=\"https://www.meetpays.com/\">MeetPays</a></li>\n" +
+    "        <li><a target=\"_blank\" href=\"https://btcquick.com/\">btcQuick</a></li>\n" +
+    "        <li><a target=\"_blank\" href=\"http://www.buybitcoins.com\">BuyBitcoins</a></li>\n" +
+    "        <li><a target=\"_blank\" href=\"http://money2btc.com\">Money2BTC</a></li>\n" +
+    "    </ul>\n" +
+    "    <h4>Using wire transfers</h4>\n" +
+    "    <ul>\n" +
+    "        <li><a target=\"_blank\" href=\"http://bitstamp.net\">BITSTAMP</a></li>\n" +
+    "        <li><a target=\"_blank\" href=\"http://mtgox.com\">Mt. Gox</a></li>\n" +
+    "        <li><a target=\"_blank\" href=\"http://btc-e.com\">BTC-E</a></li>\n" +
+    "    </ul>\n" +
+    "    <h4>Buy locally using cash or wire</h4>\n" +
+    "    <ul>\n" +
+    "        <li><a target=\"_blank\" href=\"http://localbitcoins.com\">LocalBitcoins</a></li>\n" +
+    "    </ul>\n" +
+    "</div>\n"
   );
 
 }]);

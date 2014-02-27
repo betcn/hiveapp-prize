@@ -1,35 +1,63 @@
 {
-    "name": "components/jquery",
-    "description": "jQuery JavaScript Library",
+    "name": "components/jqueryui",
     "type": "component",
-    "homepage": "http://jquery.com",
+    "description": "jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library. Whether you're building highly interactive web applications or you just need to add a date picker to a form control, jQuery UI is the perfect choice.",
     "license": "MIT",
-    "support": {
-        "irc": "irc://irc.freenode.org/jquery",
-        "issues": "http://bugs.jquery.com",
-        "forum": "http://forum.jquery.com",
-        "wiki": "http://docs.jquery.com/",
-        "source": "https://github.com/jquery/jquery"
+    "require": {
+        "components/jquery": ">=1.8"
     },
     "authors": [
         {
-            "name": "John Resig",
-            "email": "jeresig@gmail.com"
+            "name": "jQuery UI Team",
+            "homepage": "http://jqueryui.com/about"
+        },
+        {
+            "name": "Scott Gonzalez",
+            "email": "scott.gonzalez@gmail.com",
+            "homepage": "http://scottgonzalez.com"
+        },
+        {
+            "name": "Joern Zaefferer",
+            "email": "joern.zaefferer@gmail.com",
+            "homepage": "http://bassistance.de"
+        },
+        {
+            "name": "Kris Borchers",
+            "email": "kris.borchers@gmail.com",
+            "homepage": "http://krisborchers.com"
+        },
+        {
+            "name": "Corey Frang",
+            "email": "gnarf37@gmail.com",
+            "homepage": "http://gnarf.net"
+        },
+        {
+            "name": "Mike Sherov",
+            "email": "mike.sherov@gmail.com",
+            "homepage": "http://mike.sherov.com"
+        },
+        {
+            "name": "TJ VanToll",
+            "email": "tj.vantoll@gmail.com",
+            "homepage": "http://tjvantoll.com"
         }
     ],
-    "require": {
-        "robloach/component-installer": "*"
-    },
     "extra": {
         "component": {
+            "name": "jquery-ui",
             "scripts": [
-                "jquery.js"
+                "ui/jquery-ui.js"
             ],
             "files": [
-                "jquery.min.js",
-                "jquery-migrate.js",
-                "jquery-migrate.min.js"
-            ]
+                "ui/**",
+                "themes/**"
+            ],
+            "shim": {
+                "deps": [
+                    "jquery"
+                ],
+                "exports": "jQuery"
+            }
         }
     }
 }

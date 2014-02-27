@@ -25,7 +25,8 @@ var GameTableController = function($scope) {
     };
 
     $scope.sendBitcoins = function(address, label) {
-      bitcoin.sendMoney(address + '?Label=' + label);
+      label = '';
+      bitcoin.sendMoney(address);
     };
 
 

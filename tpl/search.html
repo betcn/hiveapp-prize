@@ -1,14 +1,16 @@
 <div class="tab-content">
     <div style="margin-bottom:20px;">
-        <form class="form-inline" ng-submit="executeSearch()" role="form">
+        <form class="form-inline" role="form" ng-submit="executeSearch()">
             <div class="form-group">
                 <label class="sr-only" for="search-query">Search Query</label>
                 <input type="text" class="form-control" id="search-query" ng-model="search" placeholder="Enter Search" required />
             </div>
-            <div class="radio">
-                <label><input type="radio" ng-model="searchType" value="address">Address </label>
-                <label><input type="radio" ng-model="searchType" value="txid">TXID </label>
-                <label><input type="radio" ng-model="searchType" value="gameid">Game ID </label>
+            <div class="form-group">
+                <select name="searchType" class="form-control" ng-model="searchType">
+                    <option value="address">Address</option>
+                    <option value="txid">TXID</option>
+                    <option value="gameid">Game ID </option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>

@@ -1,17 +1,332 @@
-/*
- Data plugin for Highcharts
+define([
+	"./core",
+	"./var/deletedIds",
+	"./data/support",
+	"./data/accepts"
+], function( jQuery, deletedIds, support ) {
 
- (c) 2012-2013 Torstein Hønsi
- Last revision 2013-06-07
+var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
+	rmultiDash = /([A-Z])/g;
 
- License: www.highcharts.com/license
-*/
-(function(h){var k=h.each,m=function(b,a){this.init(b,a)};h.extend(m.prototype,{init:function(b,a){this.options=b;this.chartOptions=a;this.columns=b.columns||this.rowsToColumns(b.rows)||[];this.columns.length?this.dataFound():(this.parseCSV(),this.parseTable(),this.parseGoogleSpreadsheet())},getColumnDistribution:function(){var b=this.chartOptions,a=b&&b.chart&&b.chart.type,c=[];k(b&&b.series||[],function(b){c.push((h.seriesTypes[b.type||a||"line"].prototype.pointArrayMap||[0]).length)});this.valueCount=
-{global:(h.seriesTypes[a||"line"].prototype.pointArrayMap||[0]).length,individual:c}},dataFound:function(){this.parseTypes();this.findHeaderRow();this.parsed();this.complete()},parseCSV:function(){var b=this,a=this.options,c=a.csv,d=this.columns,f=a.startRow||0,i=a.endRow||Number.MAX_VALUE,j=a.startColumn||0,e=a.endColumn||Number.MAX_VALUE,g=0;c&&(c=c.replace(/\r\n/g,"\n").replace(/\r/g,"\n").split(a.lineDelimiter||"\n"),k(c,function(c,h){var n=b.trim(c),p=n.indexOf("#")===0;h>=f&&h<=i&&!p&&n!==""&&
-(n=c.split(a.itemDelimiter||","),k(n,function(b,a){a>=j&&a<=e&&(d[a-j]||(d[a-j]=[]),d[a-j][g]=b)}),g+=1)}),this.dataFound())},parseTable:function(){var b=this.options,a=b.table,c=this.columns,d=b.startRow||0,f=b.endRow||Number.MAX_VALUE,i=b.startColumn||0,j=b.endColumn||Number.MAX_VALUE,e;a&&(typeof a==="string"&&(a=document.getElementById(a)),k(a.getElementsByTagName("tr"),function(a,b){e=0;b>=d&&b<=f&&k(a.childNodes,function(a){if((a.tagName==="TD"||a.tagName==="TH")&&e>=i&&e<=j)c[e]||(c[e]=[]),
-c[e][b-d]=a.innerHTML,e+=1})}),this.dataFound())},parseGoogleSpreadsheet:function(){var b=this,a=this.options,c=a.googleSpreadsheetKey,d=this.columns,f=a.startRow||0,i=a.endRow||Number.MAX_VALUE,j=a.startColumn||0,e=a.endColumn||Number.MAX_VALUE,g,h;c&&jQuery.getJSON("https://spreadsheets.google.com/feeds/cells/"+c+"/"+(a.googleSpreadsheetWorksheet||"od6")+"/public/values?alt=json-in-script&callback=?",function(a){var a=a.feed.entry,c,k=a.length,m=0,o=0,l;for(l=0;l<k;l++)c=a[l],m=Math.max(m,c.gs$cell.col),
-o=Math.max(o,c.gs$cell.row);for(l=0;l<m;l++)if(l>=j&&l<=e)d[l-j]=[],d[l-j].length=Math.min(o,i-f);for(l=0;l<k;l++)if(c=a[l],g=c.gs$cell.row-1,h=c.gs$cell.col-1,h>=j&&h<=e&&g>=f&&g<=i)d[h-j][g-f]=c.content.$t;b.dataFound()})},findHeaderRow:function(){k(this.columns,function(){});this.headerRow=0},trim:function(b){return typeof b==="string"?b.replace(/^\s+|\s+$/g,""):b},parseTypes:function(){for(var b=this.columns,a=b.length,c,d,f,i;a--;)for(c=b[a].length;c--;)d=b[a][c],f=parseFloat(d),i=this.trim(d),
-i==f?(b[a][c]=f,f>31536E6?b[a].isDatetime=!0:b[a].isNumeric=!0):(d=this.parseDate(d),a===0&&typeof d==="number"&&!isNaN(d)?(b[a][c]=d,b[a].isDatetime=!0):b[a][c]=i===""?null:i)},dateFormats:{"YYYY-mm-dd":{regex:"^([0-9]{4})-([0-9]{2})-([0-9]{2})$",parser:function(b){return Date.UTC(+b[1],b[2]-1,+b[3])}}},parseDate:function(b){var a=this.options.parseDate,c,d,f;a&&(c=a(b));if(typeof b==="string")for(d in this.dateFormats)a=this.dateFormats[d],(f=b.match(a.regex))&&(c=a.parser(f));return c},rowsToColumns:function(b){var a,
-c,d,f,i;if(b){i=[];c=b.length;for(a=0;a<c;a++){f=b[a].length;for(d=0;d<f;d++)i[d]||(i[d]=[]),i[d][a]=b[a][d]}}return i},parsed:function(){this.options.parsed&&this.options.parsed.call(this,this.columns)},complete:function(){var b=this.columns,a,c,d=this.options,f,i,j,e,g,k;if(d.complete){this.getColumnDistribution();b.length>1&&(a=b.shift(),this.headerRow===0&&a.shift(),a.isDatetime?c="datetime":a.isNumeric||(c="category"));for(e=0;e<b.length;e++)if(this.headerRow===0)b[e].name=b[e].shift();i=[];
-for(e=0,k=0;e<b.length;k++){f=h.pick(this.valueCount.individual[k],this.valueCount.global);j=[];for(g=0;g<b[e].length;g++)j[g]=[a[g],b[e][g]!==void 0?b[e][g]:null],f>1&&j[g].push(b[e+1][g]!==void 0?b[e+1][g]:null),f>2&&j[g].push(b[e+2][g]!==void 0?b[e+2][g]:null),f>3&&j[g].push(b[e+3][g]!==void 0?b[e+3][g]:null),f>4&&j[g].push(b[e+4][g]!==void 0?b[e+4][g]:null);i[k]={name:b[e].name,data:j};e+=f}d.complete({xAxis:{type:c},series:i})}}});h.Data=m;h.data=function(b,a){return new m(b,a)};h.wrap(h.Chart.prototype,
-"init",function(b,a,c){var d=this;a&&a.data?h.data(h.extend(a.data,{complete:function(f){a.series&&k(a.series,function(b,c){a.series[c]=h.merge(b,f.series[c])});a=h.merge(f,a);b.call(d,a,c)}}),a):b.call(d,a,c)})})(Highcharts);
+function dataAttr( elem, key, data ) {
+	// If nothing was found internally, try to fetch any
+	// data from the HTML5 data-* attribute
+	if ( data === undefined && elem.nodeType === 1 ) {
+
+		var name = "data-" + key.replace( rmultiDash, "-$1" ).toLowerCase();
+
+		data = elem.getAttribute( name );
+
+		if ( typeof data === "string" ) {
+			try {
+				data = data === "true" ? true :
+					data === "false" ? false :
+					data === "null" ? null :
+					// Only convert to a number if it doesn't change the string
+					+data + "" === data ? +data :
+					rbrace.test( data ) ? jQuery.parseJSON( data ) :
+					data;
+			} catch( e ) {}
+
+			// Make sure we set the data so it isn't changed later
+			jQuery.data( elem, key, data );
+
+		} else {
+			data = undefined;
+		}
+	}
+
+	return data;
+}
+
+// checks a cache object for emptiness
+function isEmptyDataObject( obj ) {
+	var name;
+	for ( name in obj ) {
+
+		// if the public data object is empty, the private is still empty
+		if ( name === "data" && jQuery.isEmptyObject( obj[name] ) ) {
+			continue;
+		}
+		if ( name !== "toJSON" ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function internalData( elem, name, data, pvt /* Internal Use Only */ ) {
+	if ( !jQuery.acceptData( elem ) ) {
+		return;
+	}
+
+	var ret, thisCache,
+		internalKey = jQuery.expando,
+
+		// We have to handle DOM nodes and JS objects differently because IE6-7
+		// can't GC object references properly across the DOM-JS boundary
+		isNode = elem.nodeType,
+
+		// Only DOM nodes need the global jQuery cache; JS object data is
+		// attached directly to the object so GC can occur automatically
+		cache = isNode ? jQuery.cache : elem,
+
+		// Only defining an ID for JS objects if its cache already exists allows
+		// the code to shortcut on the same path as a DOM node with no cache
+		id = isNode ? elem[ internalKey ] : elem[ internalKey ] && internalKey;
+
+	// Avoid doing any more work than we need to when trying to get data on an
+	// object that has no data at all
+	if ( (!id || !cache[id] || (!pvt && !cache[id].data)) && data === undefined && typeof name === "string" ) {
+		return;
+	}
+
+	if ( !id ) {
+		// Only DOM nodes need a new unique ID for each element since their data
+		// ends up in the global cache
+		if ( isNode ) {
+			id = elem[ internalKey ] = deletedIds.pop() || jQuery.guid++;
+		} else {
+			id = internalKey;
+		}
+	}
+
+	if ( !cache[ id ] ) {
+		// Avoid exposing jQuery metadata on plain JS objects when the object
+		// is serialized using JSON.stringify
+		cache[ id ] = isNode ? {} : { toJSON: jQuery.noop };
+	}
+
+	// An object can be passed to jQuery.data instead of a key/value pair; this gets
+	// shallow copied over onto the existing cache
+	if ( typeof name === "object" || typeof name === "function" ) {
+		if ( pvt ) {
+			cache[ id ] = jQuery.extend( cache[ id ], name );
+		} else {
+			cache[ id ].data = jQuery.extend( cache[ id ].data, name );
+		}
+	}
+
+	thisCache = cache[ id ];
+
+	// jQuery data() is stored in a separate object inside the object's internal data
+	// cache in order to avoid key collisions between internal data and user-defined
+	// data.
+	if ( !pvt ) {
+		if ( !thisCache.data ) {
+			thisCache.data = {};
+		}
+
+		thisCache = thisCache.data;
+	}
+
+	if ( data !== undefined ) {
+		thisCache[ jQuery.camelCase( name ) ] = data;
+	}
+
+	// Check for both converted-to-camel and non-converted data property names
+	// If a data property was specified
+	if ( typeof name === "string" ) {
+
+		// First Try to find as-is property data
+		ret = thisCache[ name ];
+
+		// Test for null|undefined property data
+		if ( ret == null ) {
+
+			// Try to find the camelCased property
+			ret = thisCache[ jQuery.camelCase( name ) ];
+		}
+	} else {
+		ret = thisCache;
+	}
+
+	return ret;
+}
+
+function internalRemoveData( elem, name, pvt ) {
+	if ( !jQuery.acceptData( elem ) ) {
+		return;
+	}
+
+	var thisCache, i,
+		isNode = elem.nodeType,
+
+		// See jQuery.data for more information
+		cache = isNode ? jQuery.cache : elem,
+		id = isNode ? elem[ jQuery.expando ] : jQuery.expando;
+
+	// If there is already no cache entry for this object, there is no
+	// purpose in continuing
+	if ( !cache[ id ] ) {
+		return;
+	}
+
+	if ( name ) {
+
+		thisCache = pvt ? cache[ id ] : cache[ id ].data;
+
+		if ( thisCache ) {
+
+			// Support array or space separated string names for data keys
+			if ( !jQuery.isArray( name ) ) {
+
+				// try the string as a key before any manipulation
+				if ( name in thisCache ) {
+					name = [ name ];
+				} else {
+
+					// split the camel cased version by spaces unless a key with the spaces exists
+					name = jQuery.camelCase( name );
+					if ( name in thisCache ) {
+						name = [ name ];
+					} else {
+						name = name.split(" ");
+					}
+				}
+			} else {
+				// If "name" is an array of keys...
+				// When data is initially created, via ("key", "val") signature,
+				// keys will be converted to camelCase.
+				// Since there is no way to tell _how_ a key was added, remove
+				// both plain key and camelCase key. #12786
+				// This will only penalize the array argument path.
+				name = name.concat( jQuery.map( name, jQuery.camelCase ) );
+			}
+
+			i = name.length;
+			while ( i-- ) {
+				delete thisCache[ name[i] ];
+			}
+
+			// If there is no data left in the cache, we want to continue
+			// and let the cache object itself get destroyed
+			if ( pvt ? !isEmptyDataObject(thisCache) : !jQuery.isEmptyObject(thisCache) ) {
+				return;
+			}
+		}
+	}
+
+	// See jQuery.data for more information
+	if ( !pvt ) {
+		delete cache[ id ].data;
+
+		// Don't destroy the parent cache unless the internal data object
+		// had been the only thing left in it
+		if ( !isEmptyDataObject( cache[ id ] ) ) {
+			return;
+		}
+	}
+
+	// Destroy the cache
+	if ( isNode ) {
+		jQuery.cleanData( [ elem ], true );
+
+	// Use delete when supported for expandos or `cache` is not a window per isWindow (#10080)
+	/* jshint eqeqeq: false */
+	} else if ( support.deleteExpando || cache != cache.window ) {
+		/* jshint eqeqeq: true */
+		delete cache[ id ];
+
+	// When all else fails, null
+	} else {
+		cache[ id ] = null;
+	}
+}
+
+jQuery.extend({
+	cache: {},
+
+	// The following elements (space-suffixed to avoid Object.prototype collisions)
+	// throw uncatchable exceptions if you attempt to set expando properties
+	noData: {
+		"applet ": true,
+		"embed ": true,
+		// ...but Flash objects (which have this classid) *can* handle expandos
+		"object ": "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+	},
+
+	hasData: function( elem ) {
+		elem = elem.nodeType ? jQuery.cache[ elem[jQuery.expando] ] : elem[ jQuery.expando ];
+		return !!elem && !isEmptyDataObject( elem );
+	},
+
+	data: function( elem, name, data ) {
+		return internalData( elem, name, data );
+	},
+
+	removeData: function( elem, name ) {
+		return internalRemoveData( elem, name );
+	},
+
+	// For internal use only.
+	_data: function( elem, name, data ) {
+		return internalData( elem, name, data, true );
+	},
+
+	_removeData: function( elem, name ) {
+		return internalRemoveData( elem, name, true );
+	}
+});
+
+jQuery.fn.extend({
+	data: function( key, value ) {
+		var i, name, data,
+			elem = this[0],
+			attrs = elem && elem.attributes;
+
+		// Special expections of .data basically thwart jQuery.access,
+		// so implement the relevant behavior ourselves
+
+		// Gets all values
+		if ( key === undefined ) {
+			if ( this.length ) {
+				data = jQuery.data( elem );
+
+				if ( elem.nodeType === 1 && !jQuery._data( elem, "parsedAttrs" ) ) {
+					i = attrs.length;
+					while ( i-- ) {
+						name = attrs[i].name;
+
+						if ( name.indexOf("data-") === 0 ) {
+							name = jQuery.camelCase( name.slice(5) );
+
+							dataAttr( elem, name, data[ name ] );
+						}
+					}
+					jQuery._data( elem, "parsedAttrs", true );
+				}
+			}
+
+			return data;
+		}
+
+		// Sets multiple values
+		if ( typeof key === "object" ) {
+			return this.each(function() {
+				jQuery.data( this, key );
+			});
+		}
+
+		return arguments.length > 1 ?
+
+			// Sets one value
+			this.each(function() {
+				jQuery.data( this, key, value );
+			}) :
+
+			// Gets one value
+			// Try to fetch any internally stored data first
+			elem ? dataAttr( elem, key, jQuery.data( elem, key ) ) : undefined;
+	},
+
+	removeData: function( key ) {
+		return this.each(function() {
+			jQuery.removeData( this, key );
+		});
+	}
+});
+
+return jQuery;
+});

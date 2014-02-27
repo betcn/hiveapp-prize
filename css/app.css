@@ -390,9 +390,29 @@ input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
   color: #ad965f!important;
 }
-.container {
-  max-width: none !important;
-  width: 960px !important;
+a#navigation {
+  color: #f50000!important;
+}
+.content {
+  margin-top: 70px;
+}
+.img-centered {
+  max-width: 26%;
+  margin: 0 auto;
+}
+#loading-mask {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  line-height: 200px;
+  margin-left: -250px;
+  background-color: #220000;
+  text-align: center;
+  /* needed styles for the overlay */
+  z-index: 9999;
+  /* keep on top of other elements on the page */
+  outline: 9999px solid rgba(0, 0, 0, 0.5);
 }
 body {
   background-image: url("../img/bgr-mast.gif");
@@ -625,6 +645,27 @@ td {
   text-align: left;
   list-style: none;
   font-size: 12px;
+}
+.logo-centered {
+  width: 244px;
+  margin: 0 auto;
+}
+.content-centered {
+  width: 100%;
+  margin: 0 auto;
+}
+#prize .content {
+  margin-top: 48px!important;
+}
+.clear-div {
+  clear: both;
+  margin-top: 30px;
+}
+#prize .column-right {
+  margin-top: 0px!important;
+}
+#prize .days {
+  font-size: 17px;
 }
 @media screen and (max-width: 1252px) {
   .top-wrap .column-right {

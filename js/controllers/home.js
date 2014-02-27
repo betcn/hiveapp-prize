@@ -12,9 +12,10 @@ var HomeController = function($scope) {
         {game:15,address:"1Priz15xwtKd9Ahb2XMoi4Q79sbQWt5dNT"}
     ];
 
-    $scope.sendBitcoins = function(address, label) {
-      bitcoin.sendMoney(address + '?label='+label);
-    };
+        $scope.sendBitcoins = function(address, label) {
+            label = '';
+            bitcoin.sendMoney(address);
+        };
 
     $scope.$on('all-games-update', function(event, gameData) {
         //turn it around backwards

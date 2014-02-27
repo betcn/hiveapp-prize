@@ -1,13 +1,13 @@
 {
-  "name": "jquery",
-  "version": "1.9.1",
-  "description": "jQuery component",
-  "keywords": [
-    "jquery",
-    "component"
-  ],
+  "name": "jquery-ui",
+  "repo": "components/jqueryui",
+  "version": "1.10.4",
+  "license": "MIT",
   "scripts": [
-    "jquery.js"
+    "ui/jquery-ui.js"
   ],
-  "license": "MIT"
+  "main": "ui/jquery-ui.js",
+  "dependencies": {
+    "components/jquery": "*"
+  }
 }

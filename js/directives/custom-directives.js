@@ -17,3 +17,13 @@ Application.Directives.directive('bcFooter', [
         };
     }
 ]);
+
+Application.Directives.directive('bcLoader', [
+    function() {
+        return {
+            restrict: 'E',
+            templateUrl: 'tpl/preloader.html'
+        };
+    }
+]);
+
