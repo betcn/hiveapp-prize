@@ -44,6 +44,9 @@ var config = function($routeProvider, $locationProvider, $compileProvider) {
     }).when('/index.html', {
         templateUrl: 'tpl/home.html',
         controller: "HomeController"
+    }).when('/buy-tickets', {
+        templateUrl: 'tpl/home.html',
+        controller: "HomeController"
     }).when("/game/:game", {
         templateUrl: 'tpl/game.html',
         controller: 'GameDataController'
