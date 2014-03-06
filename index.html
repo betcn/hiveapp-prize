@@ -47,14 +47,22 @@
                     <h3></h3> 
                 </div>            
             </div> 
-            <div class="row" style="margin-top:20px;">
-                <ul ng-controller="NavController" class="nav nav-pills nav-justified">
+            <div class="row hidden-xs hidden-sm" style="margin-top:20px;">
+                <ul ng-controller="NavController" class="nav nav-tabs nav-justified">
                     <li ng-class="getActive('/')"><a href='buy-tickets'>Buy Tickets</a></li>
                     <li ng-class="getActive('/history')"><a href='history'>Recent Drawings</a></li>
                     <li ng-class="getActive('/search')"><a href='search'>Search</a></li>
                     <li ng-class="getActive('/proof')"><a href='proof'>How to Play</a></li>
                 </ul> 
             </div>
+            <div class="row visible-xs visible-sm" style="margin-top:20px;">
+                <ul ng-controller="NavController" class="nav nav-tabs nav-stacked">
+                    <li ng-class="getActive('/')"><a href='buy-tickets'>Buy Tickets</a></li>
+                    <li ng-class="getActive('/history')"><a href='history'>Recent Drawings</a></li>
+                    <li ng-class="getActive('/search')"><a href='search'>Search</a></li>
+                    <li ng-class="getActive('/proof')"><a href='proof'>How to Play</a></li>
+                </ul> 
+            </div>            
             
             <div ng-view></div>
 
