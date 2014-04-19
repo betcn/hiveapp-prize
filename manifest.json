@@ -1,0 +1,8 @@
+{
+  "name": "BetCoin Prize",
+  "id": "tm.betcoin.prize",
+  "version": "1.3.4",
+  "author": "BetCoin",
+  "description": "Win the Jackpot! Buy Lottery Tickets",
+  "icon": "hiveapp-icon.png"
+}

@@ -1,0 +1,40 @@
+<div>
+    <div ng-hide="gamedata" class="alert alert-info">Loading</div>
+    <div ng-show="gamedata">
+        <h3>Game {{ gamedata.game }} @ {{ gamedata.start | date:'M/d/yy HH:mm:ss' }} ({{ gamedata._id }})</h3>
+        <h1><b>Jackpot: </b>{{ gamedata.totalPayout | btc }} BTC</h1>
+        <p><b>Payout Address: </b>{{ gamedata.payoutAddress }}</p>
+        <p><b>Start: </b>{{ gamedata.start | date:'M/d/yy HH:mm:ss' }}</p>
+        <p><b>End</b>: {{ gamedata.end | date:'M/d/yy HH:mm:ss' }}</p>
+        <p><b>Tickets: </b>{{ gamedata.ticketCount | number }}</p>
+        <div class="alert alert-danger" ng-show="gamedata.payout.prepared && ! gamedata.payout.sent">Payout Pending</div>
+        <div class="alert alert-success" ng-show='gamedata.payout.sent'>
+            <p><b>Winner: </b>{{ gamedata.winData.player }}</p>
+            <p><b>Game Hash: </b>{{ gamedata.winData.hash }}</p>
+            <p><b>Hash Partial: </b>{{ gamedata.winData.partial }}</p>
+            <p><b>Ticket Index: </b>{{ gamedata.winData.index | number }}</p>
+            <p><b>Payout TxID: </b>{{ gamedata.payout.txid }}</p>
+            <p><b>Payout Amount: </b>{{ gamedata.payout.amount | btc }} BTC</p>
+            <p><b>Payout Sent: </b>{{ gamedata.payout.sent | date:'M/d/yy HH:mm:ss' }}</p>
+        </div>
+
+        <div class="hidden-sm hidden-xs ">
+            <gamechart gamedata="gamedata"></gamechart>
+        </div>
+        <h4>Bets</h4>
+        <table class="table table-striped">
+            <tr>
+                <th>Date</th>
+                <th>TXID</th>
+                <th>Tickets</th>
+                <th>To Jackpot (BTC)</th>
+            </tr>
+            <tr ng-repeat="bet in gamedata.bets">
+                <td>{{ bet.date | date:'M/d/yy HH:mm:ss' }}</td>
+                <td><txid searchterm="{{ bet.txid }}"></txid></td>
+                <td>{{ bet.tickets | number }}</td>
+                <td>{{ bet.toPayout | btc }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

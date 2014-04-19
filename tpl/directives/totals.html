@@ -1,0 +1,23 @@
+<div>
+    <div ng-hide="totals && exchange" class="alert alert-info">Loading</div>
+    <div class="row" ng-show="totals && exchange">
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Bets</div>
+                <div class="panel-body">{{ totals.bets | number }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Tickets</div>
+                <div class="panel-body">{{ totals.tickets | number }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Payouts (1 BTC = {{ exchange | currency }})</div>
+                <div class="panel-body">{{ totals.payout | btc | number:0 }} BTC | {{ (totals.payout / 100000000) * exchange | currency }}</div>
+            </div>
+        </div>
+    </div>
+</div>

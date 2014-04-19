@@ -1,0 +1,34 @@
+<pre style="font-size:7pt;">
+var getWinner = function(gameData) {
+    var ticketBin = [];
+    var hmac = crypto.createHmac('sha512', gameData._id);
+    gameData.bets.forEach(function(bet) {
+        for(var i = 0; i < bet.tickets; i++) {
+            ticketBin.push(bet.playerAddress);
+        }
+        hmac.update(bet.txid);
+    });
+    logger.log('info', '%d tickets', ticketBin.length);
+    var gameHash = hmac.digest('hex');
+    var lucky = NaN;
+    var partial = "";
+    var winIndex = -1;
+    var powerFound = false;
+    for (var power = 1; powerFound === false; power++) {
+        var maxroll = Math.pow(16, power);
+        if (maxroll >= ticketBin.length) {
+            partial = gameHash.substring(0, power);
+            lucky = parseInt(partial, 16);
+            winIndex = Math.floor((ticketBin.length / maxroll) * lucky);
+            powerFound = true;
+        }
+    }
+    logger.log('info', 'power: %d, partial: %s', power - 1, partial);
+    return {
+        player: ticketBin[winIndex],
+        hash: gameHash,
+        partial: partial,
+        index: winIndex
+    };
+};
+</pre>

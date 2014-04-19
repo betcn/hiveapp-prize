@@ -1,0 +1,32 @@
+<div class="tab-content">
+    <div style="margin-bottom:20px;">
+        <form class="form-inline" role="form" ng-submit="executeSearch()">
+            <div class="form-group">
+                <label class="sr-only" for="search-query">Search Query</label>
+                <input type="text" class="form-control" id="search-query" ng-model="search" placeholder="Enter Search Value" required />
+            </div>
+            <div class="form-group">
+                <select name="searchType" class="form-control" ng-model="searchType">
+                    <option value="address">Address</option>
+                    <option value="txid">TXID</option>
+                    <option value="gameid">Game ID</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <div ng-show="prizeSearchLoading" class="alert alert-info"><p>Searching</p></div>
+    <div ng-show="error" class="alert alert-danger">{{searchkey}}Result not found!</div>
+    <div ng-show="message" class="alert alert-info">Enter a search value in the field above</div>
+    
+    <div ng-show="searchType == 'address' && results.address.length">
+        <historytable games="results.address"></historytable>
+    </div>
+    <div ng-show="searchType == 'txid' && results.txid.length">
+        <historytable games="results.txid"></historytable>
+    </div>
+    <div ng-show="searchType == 'gameid' && results.gameid._id">
+        <gamedetail gamedata="results.gameid"></gamedetail>
+    </div>
+
+</div>
