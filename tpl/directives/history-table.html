@@ -1,0 +1,58 @@
+<div>
+    <div ng-hide="games" class="alert alert-info">Loading</div>
+    <div ng-show="games">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Drawing</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Bets</th>
+                    <th>Tickets</th>
+                    <th>Payout Amount: </th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="gamedata in games" ng-class="rowClass(gamedata)">
+                    <td>
+                        {{ gamedata.game }}
+                        <a ng-href="game-detail/{{ gamedata._id }}" class="btn pull-right btn-xs btn-primary">Details</a>
+                    </td>
+                    <td>{{ gamedata.start | date:'M/d/yy HH:mm:ss' }}</td>
+                    <td>{{ gamedata.end | date:'M/d/yy HH:mm:ss' }}</td>
+                    <td>{{ gamedata.betCount | number }}</td>
+                    <td>{{ gamedata.ticketCount | number }}</td>
+                    <td>{{ gamedata.totalPayout | btc }}</td>
+                    <td>
+                        <button ng-show="gameStatus(gamedata) == 'paid'" class="btn btn-sm btn-success" data-toggle="modal" data-target="#{{ gamedata._id }}-modal">Payout Info</button>
+                        <span class="label label-danger" ng-show="gameStatus(gamedata) == 'pending'">Payout Pending</span>
+                        <span class="label label-primary" ng-show="gameStatus(gamedata) == 'current'">In Progress</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-repeat="gamedata in games" class="modal" id="{{ gamedata._id }}-modal" tabindex="-1" role="dialog" aria-labelledby="{{ gamedata._id }}" aria-hidden=true>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">{{ gamedata._id }} Payout Info</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><b>Winner: </b>{{ gamedata.winData.player }}</p>
+                        <p><b>Game Hash: </b>{{ gamedata.winData.hash }}</p>
+                        <p><b>Hash Partial: </b>{{ gamedata.winData.partial }}</p>
+                        <p><b>Ticket Index: </b>{{ gamedata.winData.index | number }}</p>
+                        <p><b>Payout TxID:</b>{{ gamedata.payout.txid }}</p>
+                        <p><b>Payout Amount: </b>{{ gamedata.payout.amount | btc }} BTC</p>
+                        <p><b>Payout Sent: </b>{{ gamedata.payout.sent | date:'M/d/yy HH:mm:ss' }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
